@@ -1,0 +1,5 @@
+---
+- hosts: icecast
+  gather_facts: false
+  roles:
+  - icecast

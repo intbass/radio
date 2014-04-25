@@ -1,0 +1,3 @@
+---
+- name: restart supybot 
+  service: name=supybot state=restarted

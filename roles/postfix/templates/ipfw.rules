@@ -1,0 +1,4 @@
+#!/bin/sh
+
+${add} 10000 allow tcp from any to any 25 in keep-state
+${add} 10001 allow tcp from any to any 25 out keep-state

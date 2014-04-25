@@ -1,0 +1,16 @@
+---
+# This will install an irc daemon with basic user
+# possibly also install a screen into an irssi
+# admin session 
+- name: install screen package 
+  pkgng: name={{ item }} state=present
+  with_items:
+   - screen
+
+- template: src=multi dest=/usr/local/share/screen/multi
+#- name: screen fragment directory
+#  file: dest=/home/vagrant/.screenrc.d mode=755 owner=vagrant group=vagrant state=directory
+
+#- name: install config builder 
+##  copy: src=build-screen dest=/home/vagrant/bin/build-screen
+#  notify: rewrite screen 

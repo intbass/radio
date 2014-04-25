@@ -1,0 +1,33 @@
+---
+liquidsoap:
+  failsafe: "this will be read out if there are no tunes to play"
+  pid:
+    path: "/var/run/liquidsoap"
+    file: "liquidsoap.pid"
+  log:
+    path: "/var/log/liquidsoap"
+    file: "liquidsoap.log"
+  telnet:
+    host: "127.0.0.1"
+    port: "1337"
+  station:
+    name: 'development radio'
+    url: "radio.dev"
+    description: "development"
+  music:
+    locations:
+    - name: "tunes"
+      path: "/tmp/duh/"
+      weight: 1
+  recording:
+    path: "/tmp"
+    pattern: "%Y%m%d-%H%M-$(artist)-$(title).mp3"
+    format: '%mp3(bitrate=192,id3v2=true)'
+  icecast:
+    mounts:
+      - mount: 'tunes/mp3'
+        host: localhost
+        format: '%mp3'
+        password: hackme 
+
+# vim: set noai ts=2 sw=2:

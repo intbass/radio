@@ -1,0 +1,7 @@
+multiuser on
+{% for user in admin_users %}
+acladd {{ user }}
+{% endfor %}
+# Last line is status: green hostname, window list in cyan, and time and date right aligned:
+hardstatus alwayslastline "%{=b}%{G}%H: %{C}%w %=%{G}%D, %m/%d %C%a"
+startup_message off # Turn off the splash screen

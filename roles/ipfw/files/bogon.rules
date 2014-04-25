@@ -1,0 +1,43 @@
+#!/bin/sh
+######################################
+# 004xx Bogon rules
+######################################
+
+mtable="13"
+bogerr="/tmp/bogerr.$$"
+bogfile="/tmp/bogons.$$"
+bogtable="/tmp/bogtab.$$"
+rm -f ${bogerr} ${bogfile}* ${bogtab}
+for ver in 4 6
+do
+  /usr/local/bin/curl -f https://www.team-cymru.org/Services/Bogons/fullbogons-ipv${ver}.txt 2> ${bogerr} > ${bogfile}.${ver}
+  if [ $? -ne 0 ] || ! [ -s ${bogfile}.${ver} ]
+  then
+    echo 'Failed to retrieve: '
+    cat ${bogerr}
+    exit 100
+  fi
+  cat ${bogfile}.${ver} >> ${bogfile}
+  rm ${bogfile}.${ver}
+done
+sed -i .bak 's/#.*//;/^ *$/d;s/0.0.0.0/::/g' ${bogfile}
+rm -f ${bogfile}.bak
+${cmd} table ${mtable} list | sed 's/ 0$//' > $bogtable
+diff -u $bogtable $bogfile | grep -E '^+' | grep -vE '^++' | sed 's/^+//' | while read ADD
+do
+    echo 'Adding: '$ADD
+    ${cmd} table ${mtable} add ${ADD}
+done
+diff -u $bogtable $bogfile | grep -E '^-' | grep -vE '^--' | sed 's/^-//' | while read RM 
+do
+    echo 'Removing: '$RM
+    ${cmd} table ${mtable} delete ${RM}
+done
+rm -f ${bogerr} ${bogfile}* ${bogtab}
+#${add} 00400 drop all from table\(${mtable}\) to any  
+
+# Deny any late arriving packets
+#${add} 00401 deny all from any to any frag
+
+# Deny ACK packets that did not match the dynamic rule table
+#${add} 00402 deny tcp from any to any established in

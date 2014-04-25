@@ -1,0 +1,35 @@
+- include: desendmail.yml
+
+- name: install package 
+  pkgng: name={{ item }} state=present
+  with_items:
+   - postfix 
+  notify: restart postfix 
+
+- lineinfile: dest=/usr/local/etc/postfix/main.cf regexp="^myhostname *=" line="myhostname = {{ network_hostname }}"
+  notify: reload postfix
+
+- lineinfile: dest=/usr/local/etc/postfix/main.cf regexp="^mydomain *=" line="mydomain = {{ network_domain }}"
+  notify: reload postfix
+
+- lineinfile: dest=/usr/local/etc/postfix/main.cf regexp="^myorigin *=" line="myorigin = \$mydomain"
+  notify: reload postfix
+
+- lineinfile: dest=/usr/local/etc/postfix/main.cf regexp="^inet_interfaces *=" line="inet_interfaces = all"
+  notify: reload postfix
+
+# TODO: Default recipients?
+#- lineinfile: dest=/etc/aliases regexp="^root:" line="root: {{ "
+
+- shell: newaliases
+  notify: reload postfix
+
+- host: freebsd
+  include: ipfw.yml
+
+- name: enable service
+  lineinfile: dest=/etc/rc.conf regexp="^postfix_enable=" line="postfix_enable=\"YES\""
+  notify: start postfix
+
+- name: start service
+  service: name=postfix state=running

@@ -1,0 +1,10 @@
+---
+- include: "roles/ipfw.yml"
+- include: "roles/keg-repo.yml"
+- include: "roles/screen.yml"
+- include: "roles/postfix.yml"
+- include: "roles/redis.yml"
+- include: "roles/supybot.yml"
+- include: "roles/liquidsoap.yml"
+- include: "roles/icecast.yml"
+- include: "roles/codegen.yml"

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+#################################################################
+# 008xx anything provided by the host rather than an app
+#################################################################
+
+# Allow out access to my ISP's Domain name server.
+# x.x.x.x must be the IP address of your ISP.s DNS
+# Dup these lines if your ISP has more than one DNS server
+# Get the IP addresses from /etc/resolv.conf file
+{% if network_dns_server %}
+{% for server in network_dns_server %}
+${add} 00{{ 808 + (loop.index*2) }} allow tcp from any to {{ server.address }} 53 out via {{ network_public_interface }} setup keep-state
+${add} 00{{ 809 + (loop.index*2) }} allow udp from any to {{ server.address }} 53 out via {{ network_public_interface }} keep-state
+{% endfor %}
+{% else %}
+${add} 00810 allow tcp from any to any 53 out via {{ network_public_interface }} setup keep-state
+${add} 00811 allow udp from any to any 53 out via {{ network_public_interface }} keep-state
+{% endif %}

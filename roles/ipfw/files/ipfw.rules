@@ -1,0 +1,30 @@
+#!/bin/sh
+
+export cmd="ipfw -q"
+export add="${cmd} add"
+########
+# Enable Logging
+########
+#
+# Logged entries go into /var/log/system.log
+# But there's no point in logging unless you're going to check the 
+# entries. In this script, all deny are tagged with a log 
+#
+if [ `/sbin/sysctl -n net.inet.ip.fw.verbose` == 0 ] ; then
+    /sbin/sysctl -w net.inet.ip.fw.verbose=1
+fi
+if [ `/sbin/sysctl -n net.inet.ip.fw.verbose_limit` == 5 ] ; then
+    /sbin/sysctl -w net.inet.ip.fw.verbose_limit=5
+fi
+#
+#To disable logging, comment out the above lines and uncomment the following:
+# /usr/sbin/sysctl -w net.inet.ip.fw.verbose=0
+#
+${cmd} -f flush
+for FILE in /etc/ipfw.rules.d/*.rules
+do
+    . $FILE
+done
+
+${add} 20000 allow tcp from any to any 22 in keep-state
+${add} 20001 allow tcp from any to any 22 out keep-state

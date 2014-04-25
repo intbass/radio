@@ -1,0 +1,13 @@
+---
+- name: install redis package 
+  pkgng: name={{ item }} state=present
+  with_items:
+   - redis 
+  notify: restart redis 
+
+- name: enable service
+  lineinfile: dest=/etc/rc.conf regexp="^redis_enable=" line="redis_enable=\"YES\""
+  notify: restart redis
+
+- name: start service
+  service: name=redis state=running

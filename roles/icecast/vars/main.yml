@@ -1,0 +1,22 @@
+---
+icecast_location: 'Earth'
+icecast_admin: 'doc@example.com'
+icecast_limit_clients: 100
+icecast_limit_sources: 2
+icecast_limit_threads: 5
+icecast_limit_queues: 524288
+icecast_timeout_client: 30
+icecast_timeout_header: 15
+icecast_timeout_source: 10
+icecast_auth_source: hackme
+icecast_auth_relay: hackme
+icecast_auth_admin_user: admin
+icecast_auth_admin_pass: pass
+icecast_log_path: /var/log/icecast
+icecast_pid_path: /var/run/icecast
+icecast_pid_file: icecast.pid
+icecast_port: 8000
+admin_users:
+- root
+
+# vim: set noai ts=2 sw=2:

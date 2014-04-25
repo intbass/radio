@@ -1,0 +1,9 @@
+#!/bin/sh
+ansible=$(pkg info ansible 2>/dev/null | head -n 1)
+test -z "$ansible" && sudo pkg install -y ansible
+if ! [ -f /usr/local/bin/provision ]
+then
+  sudo cp /home/vagrant/host/roles/ansible/files/provision /usr/local/bin/provision
+fi
+sudo chmod +x /usr/local/bin/provision
+sudo /usr/local/bin/provision

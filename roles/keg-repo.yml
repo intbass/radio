@@ -1,0 +1,5 @@
+---
+- hosts: mock
+  gather_facts: false
+  roles:
+  - keg-dub-to-repo

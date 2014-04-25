@@ -1,0 +1,11 @@
+[freebsd]
+localhost
+
+[radio]
+localhost
+
+[icecast]
+localhost
+
+[mock]
+localhost

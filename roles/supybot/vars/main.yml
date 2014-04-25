@@ -1,0 +1,1051 @@
+---
+  # Default development values
+supybot:
+supybot_home: /usr/local/supybot
+supybot_admin: admin
+supybot_chat: radio
+  # Determines the bot's default nick.
+supybot_nick: bot
+  # Determines what alternative nicks will be used if the primary nick
+  # (  nick) isn't available_ A %s in this nick is replaced by the
+  # value of   nick when used_ If no alternates are given, or if all
+  # are used, the   nick will be perturbed appropriately until an
+  # unused nick is found.
+supybot_nick_alternates: "%s_ _%s_ %s` `%s`"
+
+  # Determines the bot's ident string, if the server doesn't provide one
+  # by default.
+supybot_ident: dev
+
+  # Determines the user the bot sends to the server. A standard user using
+  # the current version of the bot will be generated if this is left
+  # empty.
+supybot_user: dev
+
+supybot_networks:
+  - name: mock
+    # Determines what password will be used on default network. Yes, we know that
+    # technically passwords are server-specific and not network-specific,
+    # but this is the best we can do right now.
+    password:
+
+    # Determines what servers the bot will connect to. Each
+    # will be tried in order, wrapping back to the first when the cycle is
+    # completed.
+    servers: 10.0.1.11
+
+    channels: "#admin #radio"
+
+    # Determines what key (if any) will be used to join the channel.
+    channels_key: ''
+
+    # Determines whether the bot will attempt to connect with SSL sockets
+    ssl: False
+
+supybot_channels:
+- name: #admin
+  type: admin
+  reply_mores_maximum: 15
+  reply_mores_length: 0
+  reply_mores_instant: 3
+  reply_whenNotCommand: True
+  reply_error_inPrivate: False
+  reply_error_noCapability: True
+  reply_withNickPrefix: True
+  reply_whenNotAddressed: True
+  reply_whenAddressedBy_chars: '!'
+  plugins_AutoMode_enable: True
+
+- name: #radio
+  type: chat
+
+supybot_reply:
+supybot_reply_format:
+      # Determines how timestamps printed for human reading should be
+      # formatted. Refer to the Python documentation for the time module to
+      # see valid formatting characters for time formats.
+supybot_reply_format_time: "%I:%M %p, %B %d, %Y"
+
+      # Determines whether elapsed times will be given as "1 day, 2 hours, 3
+      # minutes, and 15 seconds" or as "1d 2h 3m 15s".
+supybot_reply_format_time_elapsed_short: False
+
+    # Determines the absolute maximum length of the bot's reply -- no reply
+    # will be passed through the bot with a length greater than this.
+supybot_reply_maximumLength: 131072
+
+supybot_reply_mores:
+      # Determines whether the bot will break up long messages into chunks and
+      # allow users to use the 'more' command to get the remaining chunks.
+supybot_reply_mores_enabled: True
+
+      # Determines what the maximum number of chunks (for use with the 'more'
+      # command) will be.
+supybot_reply_mores_maximum: 5
+
+      # Determines how long individual chunks will be. If set to 0, uses our
+      # super-tweaked, get-the-most-out-of-an-individual-message default.
+supybot_reply_mores_length: 0
+
+      # Determines how many mores will be sent instantly (i_e_, without the
+      # use of the more command, immediately when they are formed). Defaults
+      # to 1, which means that a more command will be required for all but the
+      # first chunk.
+supybot_reply_mores_instant: 1
+
+    # Determines whether the bot will send multi-message replies in a single
+    # message or in multiple messages. For safety purposes (so the bot is
+    # less likely to flood) it will normally send everything in a single
+    # message, using mores if necessary.
+supybot_reply_oneToOne: True
+
+    # Determines whether the bot will reply with an error message when it is
+    # addressed but not given a valid command. If this value is False, the
+    # bot will remain silent, as long as no other plugins override the
+    # normal behavior.
+supybot_reply_whenNotCommand: False
+
+      # Determines whether error messages that result from bugs in the bot
+      # will show a detailed error message (the uncaught exception) or a
+      # generic error message.
+supybot_reply_error_detailed: False
+
+      # Determines whether the bot will send error messages to users in
+      # private. You might want to do this in order to keep channel traffic to
+      # minimum. This can be used in combination with
+      #       withNotice.
+supybot_reply_error_inPrivate: False
+
+      # Determines whether the bot will send error messages to users via
+      # NOTICE instead of PRIVMSG. You might want to do this so users can
+      # ignore NOTICEs from the bot and not have to see error messages; or you
+      # might want to use it in combination with     errorInPrivate
+      # so private errors don't open a query window in most IRC clients.
+supybot_reply_error_withNotice: False
+
+      # Determines whether the bot will send an error message to users who
+      # attempt to call a command for which they do not have the necessary
+      # capability. You may wish to make this True if you don't want users to
+      # understand the underlying security system preventing them from running
+      # certain commands.
+supybot_reply_error_noCapability: False
+
+    # Determines whether the bot will reply privately when replying in a
+    # channel, rather than replying to the whole channel.
+supybot_reply_inPrivate: False
+
+    # Determines whether the bot will reply with a notice when replying in a
+    # channel, rather than replying with a privmsg as normal.
+supybot_reply_withNotice: False
+
+    # Determines whether the bot will reply with a notice when it is sending
+    # a private message, in order not to open a /query window in clients.
+    # This can be overridden by individual users via the user configuration
+    # variable   withNoticeWhenPrivate.
+supybot_reply_withNoticeWhenPrivate: False
+
+    # Determines whether the bot will always prefix the user's nick to its
+    # reply to that user's command.
+supybot_reply_withNickPrefix: False
+
+    # Determines whether the bot should attempt to reply to all messages
+    # even if they don't address it (either via its nick or a prefix
+    # character). If you set this to True, you almost certainly want to set
+    #     whenNotCommand to False.
+supybot_reply_whenNotAddressed: False
+
+    # Determines whether the bot will allow you to send channel-related
+    # commands outside of that channel. Sometimes people find it confusing
+    # if a channel-related command (like Filter_outfilter) changes the
+    # behavior of the channel but was sent outside the channel itself.
+supybot_reply_requireChannelCommandsToBeSentInChannel: False
+
+    # Supybot normally replies with the full help whenever a user misuses a
+    # command. If this value is set to True, the bot will only reply with
+    # the syntax of the command (the first line of the help) rather than the
+    # full help.
+supybot_reply_showSimpleSyntax: False
+
+    # Determines what prefix characters the bot will reply to. A prefix
+    # character is a single character that the bot will use to determine
+    # what messages are addressed to it; when there are no prefix characters
+    # set, it just uses its nick. Each character in this string is
+    # interpreted individually; you can have multiple prefix chars
+    # simultaneously, and if any one of them is used as a prefix the bot
+    # will assume it is being addressed.
+supybot_reply_whenAddressedBy_chars: '!'
+
+    # Determines what strings the bot will reply to when they are at the
+    # beginning of the message. Whereas prefix_chars can only be one
+    # character (although there can be many of them), this variable is a
+    # space-separated list of strings, so you can set something like '@@ ??'
+    # and the bot will reply when a message is prefixed by either @@ or ??.
+supybot_reply_whenAddressedBy_strings: ''
+
+    # Determines whether the bot will reply when people address it by its
+    # nick, rather than with a prefix character.
+supybot_reply_whenAddressedBy_nick: True
+
+    # Determines whether the bot will reply when people address it by its
+    # nick at the end of the message, rather than at the beginning.
+supybot_reply_whenAddressedBy_nick_atEnd: False
+
+    # Determines what extra nicks the bot will always respond to when
+    # addressed by, even if its current nick is something else.
+supybot_reply_whenAddressedBy_nicks: ''
+
+  # Determines whether the bot will unidentify someone when that person
+  # changes his or her nick. Setting this to True will cause the bot to
+  # track such changes. It defaults to False for a little greater
+  # security.
+supybot_followIdentificationThroughNickChanges: False
+
+  # Determines whether the bot will always join a channel when it's
+  # invited. If this value is False, the bot will only join a channel if
+  # the user inviting it has the 'admin' capability (or if it's explicitly
+  # told to join the channel using the Admin_join command)
+supybot_alwaysJoinOnInvite: False
+
+  # Determines what message the bot replies with when a command succeeded.
+  # If this configuration variable is empty, no success message will be
+  # sent.
+supybot_replies_success: OK.
+
+  # Determines what error message the bot gives when it wants to be
+  # ambiguous.
+supybot_replies_error: "An error has occurred and has been logged. Please\
+                       contact this bot's administrator for more\
+                       information."
+
+  # Determines what message the bot replies with when someone tries to use
+  # a command that requires being identified or having a password and
+  # neither credential is correct.
+replies_incorrectAuthentication: Your hostmask doesn't match or your\
+                                         password is wrong.
+
+  # Determines what error message the bot replies with when someone tries
+  # to accessing some information on a user the bot doesn't know about.
+supybot_replies_noUser: I can't find %s in my user database_ If you didn't\
+                        give a user name, then I might not know what your\
+                        user is, and you'll need to identify before this\
+                        command might work.
+
+  # Determines what error message the bot replies with when someone tries
+  # to do something that requires them to be registered but they're not
+  # currently recognized.
+supybot_replies_notRegistered: You must be registered to use this command_\
+                               If you are already registered, you must\
+                               either identify (using the identify command)\
+                               or add a hostmask matching your current\
+                               hostmask (using the "hostmask add" command).
+
+  # Determines what error message is given when the bot is telling someone
+  # they aren't cool enough to use the command they tried to use.
+supybot_replies_noCapability: You need a doctor, not a pool man.
+
+  # Determines what generic error message is given when the bot is telling
+  # someone that they aren't cool enough to use the command they tried to
+  # use, and the author of the code calling errorNoCapability didn't
+  # provide an explicit capability for whatever reason.
+supybot_replies_genericNoCapability: Computer says no.
+
+  # Determines what error messages the bot sends to people who try to do
+  # things in a channel that really should be done in private.
+supybot_replies_requiresPrivacy: That operation cannot be done in a channel.
+
+  # Determines what message the bot sends when it thinks you've
+  # encountered a bug that the developers don't know about.
+supybot_replies_possibleBug: Insects may exist.
+
+  # A floating point number of seconds to throttle snarfed URLs, in order
+  # to prevent loops between two bots snarfing the same URLs and having
+  # the snarfed URL in the output of the snarf message.
+supybot_snarfThrottle: 10_0
+
+  # Determines the number of seconds between running the upkeep function
+  # that flushes (commits) open databases, collects garbage, and records
+  # some useful statistics at the debugging level.
+supybot_upkeepInterval: 3600
+
+  # Determines whether the bot will periodically flush data and
+  # configuration files to disk. Generally, the only time you'll want to
+  # set this to False is when you want to modify those configuration files
+  # by hand and don't want the bot to flush its current version over your
+  # modifications. Do note that if you change this to False inside the
+  # bot, your changes won't be flushed. To make this change permanent, you
+  # must edit the registry yourself.
+supybot_flush: True
+
+  # Determines what characters are valid for quoting arguments to commands
+  # in order to prevent them from being tokenized.
+supybot_commands_quotes: '"'
+
+# Determines whether the bot will allow nested commands, which rule. You
+# definitely should keep this on.
+supybot_commands_nested: True
+
+# Determines what the maximum number of nested commands will be; users
+# will receive an error if they attempt commands more nested than this.
+supybot_commands_nested_maximum: 10
+
+# Supybot allows you to specify what brackets are used for your nested
+# commands. Valid sets of brackets include [], <>, and {} (). [] has
+# strong historical motivation, as well as being the brackets that don't
+# require shift. <> or () might be slightly superior because they cannot
+# occur in a nick. If this string is empty, nested commands will not be
+# allowed in this channel.
+supybot_commands_nested_brackets: []
+
+# Supybot allows nested commands. Enabling this option will allow nested
+# commands with a syntax similar to UNIX pipes, for example: 'bot: foo |
+# bar'.
+supybot_commands_nested_pipeSyntax: False
+
+# Determines what commands have default plugins set, and which plugins
+# are set to be the default for each of those commands.
+supybot_commands_defaultPlugins_addcapability: Admin
+supybot_commands_defaultPlugins_capabilities: -admin -user -trusted notradio
+supybot_commands_defaultPlugins_disable: Owner
+supybot_commands_defaultPlugins_enable: Owner
+supybot_commands_defaultPlugins_help: Misc
+supybot_commands_defaultPlugins_ignore: Admin
+
+# Determines what plugins automatically get precedence over all other
+# plugins when selecting a default plugin for a command. By default,
+# this includes the standard loaded plugins. You probably shouldn't
+# change this if you don't know what you're doing; if you do know what
+# you're doing, then also know that this set is case-sensitive.
+supybot_commands_defaultPlugins_importantPlugins: Plugin Admin Misc User Owner Config Channel
+supybot_commands_defaultPlugins_list: Misc
+supybot_commands_defaultPlugins_reload: Owner
+supybot_commands_defaultPlugins_removecapability: Admin
+supybot_commands_defaultPlugins_unignore: Admin
+
+# Determines what commands are currently disabled. Such commands will
+# not appear in command lists, etc. They will appear not even to exist.
+supybot_commands_disabled: google_phonebook google_translate seen_any seen_last seen_user
+
+# Determines whether the bot will defend itself against command-
+# flooding.
+supybot_abuse_flood_command: True
+
+# Determines how many commands users are allowed per minute. If a user
+# sends more than this many commands in any 60 second period, he or she
+# will be ignored forsupybot_ abuse_flood_command_punishment seconds.
+supybot_abuse_flood_command_maximum: 12
+
+# Determines how many seconds the bot will ignore users who flood it
+# with commands.
+supybot_abuse_flood_command_punishment: 300
+
+# Determines whether the bot will defend itself against invalid command-
+# flooding.
+supybot_abuse_flood_command_invalid: True
+
+# Determines how many invalid commands users are allowed per minute. If
+# a user sends more than this many invalid commands in any 60 second
+# period, he or she will be ignored for
+#supybot_ abuse_flood_command_invalid_punishment seconds_ Typically,
+# this value is lower thansupybot_ abuse_flood_command_maximum, since
+# it's far less likely (and far more annoying) for users to flood with
+# invalid commands than for them to flood with valid commands.
+supybot_abuse_flood_command_invalid_maximum: 5
+
+# Determines how many seconds the bot will ignore users who flood it
+# with invalid commands. Typically, this value is higher than
+#supybot_ abuse_flood_command_punishment, since it's far less likely
+# (and far more annoying) for users to flood witih invalid commands than
+# for them to flood with valid commands.
+supybot_abuse_flood_command_invalid_punishment: 600
+
+# Determines the default length of time a driver should block waiting
+# for input.
+supybot_drivers_poll: 1_0
+
+# Determines what driver module the bot will use. Socket, a simple
+# driver based on timeout sockets, is used by default because it's
+# simple and stable. Twisted is very stable and simple, and if you've
+# got Twisted installed, is probably your best bet.
+supybot_drivers_module: default
+
+# Determines the maximum time the bot will wait before attempting to
+# reconnect to an IRC server. The bot may, of course, reconnect earlier
+# if possible.
+supybot_drivers_maxReconnectWait: 300_0
+
+  # Determines what directory configuration data is put into.
+supybot_dir_conf: /usr/local/etc/supybot
+supybot_dir_data: /usr/home/supybot
+supybot_dir_backup: /usr/local/supybot/backup
+supybot_dir_tmp: /tmp/supybot
+supybot_dir_plugins: /usr/local/lib/supybot/plugins
+supybot_dir_log: /var/log/supybot/
+supybot_dir_pid: /var/run/supybot/
+
+  # Determines what plugins will be loaded.
+supybot_plugins:
+  - Admin:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+      # Determines whether this plugin is publicly visible.
+      public: False
+
+  - Alias:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+      # Determines whether this plugin is publicly visible.
+      public: True
+      aliases_tr: translate $*
+      aliases_tr_locked: False
+      aliases_moar: more $*
+      aliases_moar_locked: False
+      aliases_define: google define $1
+      aliases_define_locked: False
+
+  - AutoMode:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether this plugin is enabled.
+      enable: False
+
+      # Determines whether this plugin will automode owners.
+      owner: True
+
+      # Determines whether the bot will "fall through" to halfop/voicing when
+      # auto-opping is turned off but auto-halfopping/voicing are turned on.
+      fallthrough: False
+
+      # Determines whether the bot will automatically op people with the
+      # <channel>,op capability when they join the channel.
+      op: True
+
+      # Determines whether the bot will automatically halfop people with the
+      # <channel>,halfop capability when they join the channel.
+      halfop: True
+
+      # Determines whether the bot will automatically voice people with the
+      # <channel>,voice capability when they join the channel.
+      voice: True
+
+      # Determines whether the bot will automatically ban people who join the
+      # channel and are on the banlist.
+      ban: True
+
+      # Determines how many seconds the bot will automatically ban a person
+      # when banning.
+      ban_period: 86400
+
+  - Ex:
+      public: True
+      enabled: True
+      repo: 'https://github.com/beats-to/supybot-plugin-ex.git'
+
+  - Channel:
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will always try to rejoin a channel
+      # whenever it's kicked from the channel.
+      alwaysRejoin: True
+
+      # Determines whether this plugin is loaded by default.
+  - ChannelLogger:
+      enabled: False
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether logging is enabled.
+      enable: True
+
+      # Determines whether channel logfiles will be flushed anytime they're
+      # written to, rather than being buffered by the operating system.
+      flushImmediately: False
+
+      # Determines whether formatting characters (such as bolding, color,
+      # etc_) are removed when writing the logs to disk.
+      stripFormatting: True
+
+      # Determines whether the logs for this channel are timestamped with the
+      # timestamp in   log_timestampFormat.
+      timestamp: True
+
+      # Determines what string a message should be prefixed with in order not
+      # to be logged. If you don't want any such prefix, just set it to the
+      # empty string.
+      noLogPrefix: [nolog]
+
+      # Determines whether the bot will automatically rotate the logs for this
+      # channel. The bot will rotate logs when the timestamp for the log
+      # changes. The timestamp is set according to the 'filenameTimestamp'
+      # configuration variable.
+      rotateLogs: False
+
+      # Determines how to represent the timestamp used for the filename in
+      # rotated logs. When this timestamp changes, the old logfiles will be
+      # closed and a new one started. The format characters for the timestamp
+      # are in the time_strftime docs at python_org_ In order for your logs to
+      # be rotated, you'll also have to enable
+      #     ChannelLogger_rotateLogs.
+      filenameTimestamp: "%Y-%m-%d"
+
+      # Determines whether the bot will partition its channel logs into
+      # separate directories based on different criteria.
+      directories: True
+
+      # Determines whether the bot will use a network directory if using
+      # directories.
+      directories_network: True
+
+      # Determines whether the bot will use a channel directory if using
+      # directories.
+      directories_channel: True
+
+      # Determines whether the bot will use a timestamp (determined by
+      #     ChannelLogger_directories_timestamp_format) if using
+      # directories.
+      directories_timestamp: False
+
+      # Determines what timestamp format will be used in the directory
+      # stucture for channel logs if
+      #     ChannelLogger_directories_timestamp is True.
+      directories_timestamp_format: "%B"
+
+  - Config:
+
+      # Determines whether this plugin is publicly visible.
+      public: False
+
+      # Determines whether this plugin is loaded by default.
+  - Filter:
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether or not to replace letters in the output of spellit.
+      spellit_replaceLetters: True
+
+      # Determines whether or not to replace punctuation in the output of
+      # spellit.
+      spellit_replacePunctuation: True
+
+      # Determines whether or not to replace numbers in the output of spellit.
+      spellit_replaceNumbers: True
+
+      # Determines the minimum number of a letters in a word before it will be
+      # shrunken by the shrink command/filter.
+      shrink_minimum: 4
+
+      # Determines whether this plugin is loaded by default.
+  - Google:
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines the URL that will be sent to Google for the Referer field
+      # of the search requests. If this value is empty, a Referer will be
+      # generated in the following format: http://$server/$botName
+      referer: ''
+
+      # Determines whether the groups snarfer is enabled. If so, URLs at
+      # groups_google_com will be snarfed and their group/title messaged to
+      # the channel.
+      groupsSnarfer: True
+
+      # Determines whether the search snarfer is enabled. If so, messages
+      # (even unaddressed ones) beginning with the word 'google' will result
+      # in the first URL Google returns being sent to the channel.
+      searchSnarfer: True
+
+      # Determines whether the word 'google' in the bot's output will be made
+      # colorful (like Google's logo).
+      colorfulFilter: False
+
+      # Determines whether results are bolded.
+      bold: True
+
+      # Determines the maximum number of results returned from the google
+      # command.
+      maximumResults: 4
+
+      # Determines what default language is used in searches. If left empty,
+      # no specific language will be requested.
+      defaultLanguage: lang_en
+
+      # Determines what level of search filtering to use by default. 'active'
+      # - most filtering, 'moderate' - default filtering, 'off' - no filtering
+      searchFilter: moderate
+
+  - I18nPlaceholder:
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether this plugin is loaded by default.
+  - Insult:
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether to include foul language in pools of randomly
+      # chosen adjective, amount and noun words.
+      allowFoul: True
+
+      # Determines the base set of words used as the pool for nouns.
+      nouns: "bat toenails bug spit cat hair fish heads gunk pond scum rat retch red dye number-9 Sun IPC manuals waffle-house grits yoo-hoo squirrel guts snake bait buzzard gizzards cat-hair-balls pods armadillo snouts entrails snake snot eel ooze toxic waste Stimpy-drool poopy poop craptacular carpet droppings cold sores IE user"
+
+      # Determines the set of foul words added to the pool of nouns.
+      foulNouns: "chicken piss dog vomit dung fat stomach-bile guano dog balls seagull puke cat bladders pus urine samples snake assholes rat-farts slurpee-backwash jizzum anal warts"
+
+      # Determines the base set of words used as the pool for amounts.
+      amounts: accumulation bucket gob coagulation half-mouthful heap mass mound petrification pile puddle stack thimbleful tongueful ooze quart bag plate
+
+      # Determines the set of foul words added to the pool of amounts.
+      foulAmounts: enema-bucketful ass-full assload
+
+      # Determines the base set of words used as the pool for adjectives.
+      adjectives: "acidic antique contemptible culturally-unsound despicable evil fermented festering foul fulminating humid impure inept inferior industrial left-over low-quality off-color petrified pointy-nosed salty sausage-snorfling tasteless tempestuous tepid tofu-nibbling unintelligent unoriginal uninspiring weasel-smelling wretched spam-sucking egg-sucking decayed halfbaked infected squishy porous pickled thick vapid unmuzzled bawdy vain lumpish churlish fobbing craven jarring fly-bitten fen-sucked spongy droning gleeking warped currish milk-livered surly mammering ill-borne beef-witted tickle-brained half-faced headless wayward onion-eyed beslubbering villainous lewd-minded cockered full-gorged rude-snouted crook-pated pribbling dread-bolted fool-born puny fawning sheep-biting dankish goatish weather-bitten knotty-pated malt-wormy saucyspleened motley-mind it-fowling vassal-willed loggerheaded clapper-clawed frothy ruttish clouted common-kissing folly-fallen plume-plucked flap-mouthed swag-bellied dizzy-eyed gorbellied weedy reeky measled spur-galled mangled impertinent bootless toad-spotted hasty-witted horn-beat yeasty hedge-born imp-bladdereddle-headed tottering hugger-muggered elf-skinned Microsoft-loving"
+
+      # Determines the set of foul words added to the pool of adjectives.
+      foulAdjectives: pignutted pox-marked rank malodorous penguin-molesting coughed-up hacked-up rump-fed boil-brained
+
+  - Karma:
+      enabled: False
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will output shorter versions of the karma
+      # output when requesting a single thing's karma.
+      simpleOutput: False
+
+      # Determines whether the bot will reply with a success message when
+      # something's karma is increased or decreased.
+      response: False
+
+      # Determines how many highest/lowest karma things are shown when karma
+      # is called with no arguments.
+      rankingDisplay: 3
+
+      # Determines how many karma things are shown when the most command is
+      # called_'
+      mostDisplay: 25
+
+      # Determines whether users can adjust the karma of their nick.
+      allowSelfRating: False
+
+      # Determines whether the bot will increase/decrease karma without being
+      # addressed.
+      allowUnaddressedKarma: False
+
+  - Math:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+  - Misc:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will list private plugins with the list
+      # command if given the --private switch. If this is disabled, non-owner
+      # users should be unable to see what private plugins are loaded.
+      listPrivatePlugins: True
+
+      # Determines the format string for timestamps in the Misc_last command.
+      # Refer to the Python documentation for the time module to see what
+      # formats are accepted. If you set this variable to the empty string,
+      # the timestamp will not be shown.
+      timestampFormat: "[%H:%M:%S]"
+
+      # Determines whether or not the timestamp will be included in the output
+      # of last when it is part of a nested command
+      last_nested_includeTimestamp: False
+
+      # Determines whether or not the nick will be included in the output of
+      # last when it is part of a nested command
+      last_nested_includeNick: False
+
+  - Network:
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+  - Note:
+      # Determines whether this plugin is loaded by default.
+      enabled: False
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will notify people of their new messages
+      # when they join the channel. Normally it will notify them when they
+      # send a message to the channel, since oftentimes joins are the result
+      # of netsplits and not the actual presence of the user.
+      notify_onJoin: False
+
+      # Determines whether the bot will repeatedly notify people of their new
+      # messages when they join the channel. That means when they join the
+      # channel, the bot will tell them they have unread messages, even if
+      # it's told them before.
+      notify_onJoin_repeatedly: False
+
+      # Determines the upper limit for automatically sending messages instead
+      # of notifications. I_e_, if this value is 2 and there are 2 new
+      # messages to notify a user about, instead of sending a notification
+      # message, the bot will simply send those new messages. If there are 3
+      # new messages, however, the bot will send a notification message.
+      notify_autoSend: 0
+
+  - Notradio:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: False
+
+  - Owner:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines what quit message will be used by default. If the quit
+      # command is called without a quit message, this will be used. If this
+      # value is empty, the nick of the person giving the quit command will be
+      # used.
+      quitMsg: ''
+
+  - Praise:
+      # Determines whether this plugin is loaded by default.
+      enabled: False
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will show the ids of a praise when the
+      # praise is given.
+      showIds: False
+
+  - Radio:
+      # Determines whether this plugin is loaded by default.
+      enabled: False
+
+      # Determines whether this plugin is publicly visible.
+      public: False
+
+  - Scheduler:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+  - Seen:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+  - Status:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the cpu command will list the time taken by
+      # children as well as the bot's process.
+      cpu_children: True
+
+      # Determines whether the cpu command will provide the number of threads
+      # spawned and active.
+      cpu_threads: False
+
+      # Determines whether the cpu command will report the amount of memory
+      # being used by the bot.
+      cpu_memory: True
+
+  - URL:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines what URLs are to be snarfed and stored in the database in
+      # the channel; URLs matching the regexp given will not be snarfed. Give
+      # the empty string if you have no URLs that you'd like to exclude from
+      # being snarfed.
+      nonSnarfingRegexp: ''
+
+  - User:
+      # Determines whether this plugin is loaded by default.
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+  - Web:
+      enabled: True
+
+      # Determines whether this plugin is publicly visible.
+      public: True
+
+      # Determines whether the bot will output the HTML title of URLs it sees
+      # in the channel.
+      titleSnarfer: False
+
+      # Determines what URLs are to be snarfed and stored in the database in
+      # the channel; URLs matching the regexp given will not be snarfed. Give
+      # the empty string if you have no URLs that you'd like to exclude from
+      # being snarfed.
+      nonSnarfingRegexp: ''
+
+      # Determines the maximum number of bytes the bot will download via the
+      # 'fetch' command in this plugin.
+      fetch_maximum: 1024
+
+    # Determines whether the bot will always load important plugins (Admin,
+    # Channel, Config, Misc, Owner, and User) regardless of what their
+    # configured state is. Generally, if these plugins are configured not to
+    # load, you didn't do it on purpose, and you still want them to load.
+    # Users who don't want to load these plugins are smart enough to change
+    # the value of this variable appropriately :)
+supybot_plugins_alwaysLoadImportant: True
+
+  # Determines what databases are available for use. If this value is not
+  # configured (that is, if its value is empty) then sane defaults will be
+  # provided.
+supybot_databases: sqlite flat
+
+    # Determines what filename will be used for the users database. This
+    # file will go into the directory specified by the
+    #   directories_conf variable.
+supybot_databases_users_filename: users.conf
+
+      # Determines how long it takes identification to time out. If the value
+      # is less than or equal to zero, identification never times out.
+supybot_databases_users_timeoutIdentification: 0
+
+      # Determines whether the bot will allow users to unregister their users.
+      # This can wreak havoc with already-existing databases, so by default we
+      # don't allow it. Enable this at your own risk. (Do also note that this
+      # does not prevent the owner of the bot from using the unregister
+      # command_)
+supybot_databases_users_allowUnregistration: False
+
+      # Determines what filename will be used for the ignores database. This
+      # file will go into the directory specified by the
+      #   directories_conf variable.
+supybot_databases_ignores_filename: ignores.conf
+
+      # Determines what filename will be used for the channels database. This
+      # file will go into the directory specified by the
+      #   directories_conf variable.
+supybot_databases_channels_filename: channels.conf
+
+      # Determines whether database-based plugins that can be channel-specific
+      # will be so. This can be overridden by individual channels. Do note
+      # that the bot needs to be restarted immediately after changing this
+      # variable or your db plugins may not work for your channel; also note
+      # that you may wish to set
+      # plugins_databases_plugins_channelSpecific_link appropriately if you
+      # wish to share a certain channel's databases globally.
+supybot_databases_plugins_channelSpecific: True
+
+      # Determines what channel global (non-channel-specific) databases will
+      # be considered a part of. This is helpful if you've been running
+      # channel-specific for awhile and want to turn the databases for your
+      # primary channel into global databases. If
+      # plugins_databases_plugins_channelSpecific_link_allow prevents linking,
+      # the current channel will be used. Do note that the bot needs to be
+      # restarted immediately after changing this variable or your db plugins
+      # may not work for your channel.
+supybot_databases_plugins_channelSpecific_link: '#'
+
+      # Determines whether another channel's global (non-channel-specific)
+      # databases will be allowed to link to this channel's databases. Do note
+      # that the bot needs to be restarted immediately after changing this
+      # variable or your db plugins may not work for your channel.
+supybot_databases_plugins_channelSpecific_link_allow: True
+
+      # Determines whether CDB databases will be allowed as a database
+      # implementation.
+supybot_databases_types_cdb_enabled: True
+
+        # Determines how often CDB databases will have their modifications
+        # flushed to disk. When the number of modified records is greater than
+        # this part of the number of unmodified records, the database will be
+        # entirely flushed to disk.
+supybot_databases_types_cdb_maximumModifications: 0.5
+
+      # Determines what will be used as the default banmask style.
+supybot_protocols_irc_banmask: host user
+
+      # Determines whether the bot will strictly follow the RFC; currently
+      # this only affects what strings are considered to be nicks. If you're
+      # using a server or a network that requires you to message a nick such
+      # as services@this_network_server then you you should set this to False.
+supybot_protocols_irc_strictRfc: False
+
+      # Determines what user modes the bot will request from the server when
+      # it first connects. Many people might choose +i; some networks allow
+      # +x, which indicates to the auth services on those networks that you
+      # should be given a fake host.
+supybot_protocols_irc_umodes: ''
+
+      # Determines what vhost the bot will bind to before connecting to the
+      # IRC server.
+supybot_protocols_irc_vhost: ''
+
+      # Determines how many old messages the bot will keep around in its
+      # history. Changing this variable will not take effect until the bot is
+      # restarted.
+supybot_protocols_irc_maxHistoryLength: 1000
+
+      # A floating point number of seconds to throttle queued messages -- that
+      # is, messages will not be sent faster than once per throttleTime
+      # seconds.
+supybot_protocols_irc_throttleTime: 1.0
+
+        # Determines whether the bot will send PINGs to the server it's
+        # connected to in order to keep the connection alive and discover
+        # earlier when it breaks. Really, this option only exists for debugging
+        # purposes: you always should make it True unless you're testing some
+        # strange server issues.
+supybot_protocols_irc_ping_enabled: True
+        # Determines the number of seconds between sending pings to the server,
+        # if pings are being sent to the server.
+supybot_protocols_irc_ping_interval: 120
+
+      # Determines whether the bot will refuse duplicate messages to be queued
+      # for delivery to the server. This is a safety mechanism put in place to
+      # prevent plugins from sending the same message multiple times; most of
+      # the time it doesn't matter, unless you're doing certain kinds of
+      # plugin hacking.
+supybot_protocols_irc_queueing_duplicates: False
+        # Determines how many seconds must elapse between JOINs sent to the
+        # server.
+supybot_protocols_irc_queueing_rateLimit_join: 0.0
+
+      # Determines how many bytes the bot will 'peek' at when looking through
+      # a URL for a doctype or title or something similar. It'll give up after
+      # it reads this many bytes, even if it hasn't found what it was looking
+      # for.
+supybot_protocols_http_peekSize: 4096
+
+      # Determines what proxy all HTTP requests should go through. The value
+      # should be of the form 'host:port'.
+supybot_protocols_http_proxy: ''
+
+  # Determines whether the bot will ignore unregistered users by default.
+  # Of course, that'll make it particularly hard for those users to
+  # register or identify with the bot, but that's your problem to solve.
+supybot_defaultIgnore: False
+
+  # A string that is the external IP of the bot. If this is the empty
+  # string, the bot will attempt to find out its IP dynamically (though
+  # sometimes that doesn't work, hence this variable).
+supybot_externalIP: ''
+
+  # Determines what the default timeout for socket objects will be. This
+  # means that *all* sockets will timeout when this many seconds has gone
+  # by (unless otherwise modified by the author of the code that uses the
+  # sockets).
+supybot_defaultSocketTimeout: 10
+
+  # Determines whether the bot will automatically thread all commands.
+supybot_debug_threadAllCommands: False
+
+  # Determines whether the bot will automatically flush all flushers
+  # *very* often. Useful for debugging when you don't know what's breaking
+  # or when, but think that it might be logged.
+supybot_debug_flushVeryOften: False
+
+    # Determines what the bot's logging format will be. The relevant
+    # documentation on the available formattings is Python's documentation
+    # on its logging module.
+supybot_log_format: "%(levelname)s %(asctime)s %(name)s %(message)s"
+
+    # Determines what the minimum priority level logged to file will be. Do
+    # note that this value does not affect the level logged to stdout; for
+    # that, you should set the value of   log_stdout_level_ Valid
+    # values are DEBUG, INFO, WARNING, ERROR, and CRITICAL, in order of
+    # increasing priority.
+supybot_log_level: INFO
+
+    # Determines the format string for timestamps in logfiles. Refer to the
+    # Python documentation for the time module to see what formats are
+    # accepted. If you set this variable to the empty string, times will be
+    # logged in a simple seconds-since-epoch format.
+supybot_log_timestampFormat: '%Y-%m-%dT%H:%M:%S'
+
+      # Determines whether the bot will log to stdout.
+supybot_log_stdout_enabled: True
+
+      # Determines whether the bot's logs to stdout (if enabled) will be
+      # colorized with ANSI color.
+supybot_log_stdout_colorized: False
+
+      # Determines whether the bot will wrap its logs when they're output to
+      # stdout.
+supybot_log_stdout_wrap: True
+
+      # Determines what the bot's logging format will be. The relevant
+      # documentation on the available formattings is Python's documentation
+      # on its logging module.
+supybot_log_stdout_format: '%(levelname)s %(asctime)s %(message)s'
+
+      # Determines what the minimum priority level logged will be. Valid
+      # values are DEBUG, INFO, WARNING, ERROR, and CRITICAL, in order of
+      # increasing priority.
+supybot_log_stdout_level: INFO
+
+      # Determines whether the bot will separate plugin logs into their own
+      # individual logfiles.
+supybot_log_plugins_individualLogfiles: False
+
+      # Determines what the bot's logging format will be. The relevant
+      # documentation on the available formattings is Python's documentation
+      # on its logging module.
+supybot_log_plugins_format: '%(levelname)s %(asctime)s %(message)s'
+
+  # These are the capabilities that are given to everyone by default. If
+  # they are normal capabilities, then the user will have to have the
+  # appropriate anti-capability if you want to override these
+  # capabilities; if they are anti-capabilities, then the user will have
+  # to have the actual capability to override these capabilities. See
+  # docs/CAPABILITIES if you don't understand why these default to what
+  # they do.
+supybot_capabilities: -radioadmin -seen -config -misc -trusted -admin -karma -channel -status -network filter user_identify -user radiotools -praise -chanellogger -note -automode -owner -scheduler
+
+  # Determines whether the bot by default will allow users to have a
+  # capability. If this is disabled, a user must explicitly have the
+  # capability for whatever command he wishes to run.
+supybot_capabilities_default: True
+
+supybot_users:
+  - name: vagrant
+    password: vagrant
+    capabilities:
+    - name: owner
+    hostmasks:
+    - nick: vagrant
+      user: vagrant
+      host: 127.0.0.1 
+
+# vim: set noai ts=2 sw=2:

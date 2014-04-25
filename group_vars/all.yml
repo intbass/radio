@@ -1,0 +1,8 @@
+---
+network_hostname: radio.dev
+supybot_ignores:
+- "Spliffy!Spliffy@greenleaves.nug 0"
+- "Spliffeh!SpliffEh@greenleaves.nug 0"
+admin_users:
+- root
+- vagrant

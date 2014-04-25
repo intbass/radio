@@ -1,0 +1,10 @@
+---
+- name: check firewall
+  shell: test -d /etc/ipfw.rules.d 
+  register: firewall
+  failed_when: false
+  changed_when: "firewall.rc != 0"
+
+- name: install ipfw rules
+  template: src=ipfw.rules dest=/etc/ipfw.rules.d/icecast.rules mode="0770" owner="root" group="wheel"
+  when: firewall.rc == 0

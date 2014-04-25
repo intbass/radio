@@ -1,0 +1,37 @@
+---
+- include_vars: main.yml
+
+# This will install an irc daemon with basic user
+# possibly also install a screen into an irssi
+# admin session 
+- name: install icecast package 
+  pkgng: name={{ item }} state=present
+  with_items:
+   - icecast2
+  notify: restart icecast 
+
+- name: user
+  user: name=icecast state=present shell=/usr/local/bin/bash 
+
+- name: configure
+  template: src=icecast.xml dest=/usr/local/etc/icecast.xml mode=644 owner="icecast" group="icecast"
+  notify: restart icecast 
+
+- name: create directory {{ item }}
+  file: name={{ item }} mode=750 owner=icecast group=icecast state=directory
+  with_items:
+  - "{{ icecast_pid_path }}"
+  - "{{ icecast_log_path }}"
+  notify: restart icecast 
+
+- host: freebsd
+  include: ipfw.yml
+
+- name: enable service
+  lineinfile: dest=/etc/rc.conf regexp="^icecast_enable=" line="icecast_enable=\"YES\""
+  notify: restart icecast
+
+- name: start service
+  service: name=icecast2 state=started
+
+- template: src="screen" dest="/usr/local/share/screen/icecast"

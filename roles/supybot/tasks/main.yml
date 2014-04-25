@@ -1,0 +1,66 @@
+---
+- hosts: freebsd
+  include: "ipfw.yml"
+
+- hosts: mock
+  include: "mock.yml"
+
+- name: install the supybot package 
+  pkgng: name={{ item }} state=present
+  with_items:
+  - py27-supybot
+  - py27-supybot-plugins
+  - py27-pip
+
+- name: create user
+  user: name=supybot state=present 
+
+- name: create directory {{ item }} 
+  file: name={{ item }} mode=755 owner=supybot group=supybot state=directory 
+  with_items:
+  - "{{ supybot_dir_data  }}"
+  - "{{ supybot_dir_backup }}"
+  - "{{ supybot_dir_data }}"
+  - "{{ supybot_dir_log }}"
+  - "{{ supybot_dir_plugins }}"
+  - "{{ supybot_dir_tmp  }}"
+
+- name: set process id runfile 
+  lineinfile: dest=/etc/rc.conf regexp="^supybot_pidfile=" line="supybot_pidfile=\"{{ supybot_dir_pid }}/supybot.pid\""
+  notify: restart supybot
+
+- name: enable service 
+  lineinfile: dest=/etc/rc.conf regexp="^supybot_enable=" line="supybot_enable=\"YES\""
+  notify: restart supybot
+
+- name: directory for config file 
+  file: dest=/usr/local/etc/supybot mode=770 owner=supybot group=supybot state=directory
+  notify: restart supybot
+
+- name: service control file
+  copy: src=rc dest=/usr/local/etc/rc.d/supybot mode=755
+  notify: restart supybot
+
+- name: service status
+  command: /usr/local/etc/rc.d/supybot status
+  failed_when: false
+  changed_when: false
+  register: supybotstatus
+
+- copy: src="supybot-plugin-install" dest="{{ supybot_dir_plugins }}/supybot-plugin-install" mode="755" owner=supybot group=supybot
+
+- shell: "{{ supybot_dir_plugins }}/supybot-plugin-install \"{{ supybot_dir_plugins }}\" \"{{ item }}\"" #git clone {{ item.url }} {{ supybot_dir_plugins }}/{{ item.name }}
+  with_items: supybot_plugins
+
+# Supybot rewrites config files on exit and no option to reload them, so only bother if it's not running
+- include: configure.yml
+  when: "supybotstatus.rc != 0"
+
+- name: log directory
+  file: dest={{ supybot_dir_log }} mode=770 owner=supybot group=supybot state=directory
+
+- name: process id directory
+  file: dest={{ supybot_dir_pid }} mode=770 owner=supybot group=supybot state=directory
+
+- name: run
+  service: name=supybot state=running

@@ -1,0 +1,5 @@
+source /usr/local/share/screen/multi
+source ${HOME}/.screenrc
+screen -t shell sudo -u supybot -i
+screen -t log tail -f {{ supybot_dir_log }}/messages.log
+screen -t irc irssi
