@@ -3,8 +3,15 @@ Development Radio
 
 You want to run your own radio station?
 
-Start by installing [vagrant](vagrantup.com)
+Start by installing [vagrant](http://vagrantup.com/) and [git](http://git-scm.com/)
 
+Then clone this repository
+
+$ git clone https://github.com/beats-to/radio.git
+
+then start your radio
+
+$ cd radio
 $ vagrant up
 
 This will do the following;
