@@ -1,4 +1,6 @@
 #!/bin/sh
+# Host side of provisioner
+# installs provision script and dependencies
 ansible=$(pkg info ansible 2>/dev/null | head -n 1)
 test -z "$ansible" && sudo pkg install -y ansible
 if ! [ -f /usr/local/bin/provision ]
