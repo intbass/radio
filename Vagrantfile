@@ -1,6 +1,6 @@
 # -*- mode: ruby; -*-
 
-require './vagrant/vars.rb'
+require File.dirname(__FILE__) + '/vagrant/vars.rb'
 
 Vagrant.configure("2") do |config|
   config.vm.guest = :freebsd

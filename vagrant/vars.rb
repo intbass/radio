@@ -4,7 +4,7 @@
 
 def load(name, default)
   # TODO Normalize to vagrantfile
-  path = "./.vagrant." + name
+  path = File.dirname(__FILE__) + "/../.vagrant." + name
   if File.file?(path)
     return File.open(path, "rb") { |f| f.read }
   end
@@ -12,7 +12,7 @@ def load(name, default)
 end
 
 def save(name, value)
-  File.open("./.vagrant." + name, 'w') {|f| f.write(value) } 
+  File.open(File.dirname(__FILE__)+"/../.vagrant." + name, 'w') {|f| f.write(value) } 
 end
 
 def music()
@@ -20,7 +20,7 @@ def music()
   if File.directory?(path)
     return path
   end
-  while True do
+  loop do
     path = @ui.ask('Path to the music: ')
     if File.directory?(path)
       save('music',path)
