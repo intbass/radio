@@ -32,9 +32,9 @@ supybot_networks:
     # Determines what servers the bot will connect to. Each
     # will be tried in order, wrapping back to the first when the cycle is
     # completed.
-    servers: 10.0.1.11
+    servers: localhost 
 
-    channels: "#admin #radio"
+    channels_join: "#admin #radio"
 
     # Determines what key (if any) will be used to join the channel.
     channels_key: ''
@@ -59,8 +59,6 @@ supybot_channels:
 - name: #radio
   type: chat
 
-supybot_reply:
-supybot_reply_format:
       # Determines how timestamps printed for human reading should be
       # formatted. Refer to the Python documentation for the time module to
       # see valid formatting characters for time formats.
@@ -220,7 +218,7 @@ supybot_replies_error: "An error has occurred and has been logged. Please\
   # Determines what message the bot replies with when someone tries to use
   # a command that requires being identified or having a password and
   # neither credential is correct.
-replies_incorrectAuthentication: Your hostmask doesn't match or your\
+supybot_replies_incorrectAuthentication: Your hostmask doesn't match or your\
                                          password is wrong.
 
   # Determines what error message the bot replies with when someone tries
