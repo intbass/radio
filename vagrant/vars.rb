@@ -3,10 +3,10 @@
 @ui = Vagrant::UI::Basic.new()
 
 def load(name, default)
-  # TODO Normalize to vagrantfile
   path = File.dirname(__FILE__) + "/../.vagrant." + name
   if File.file?(path)
-    return File.open(path, "rb") { |f| f.read }
+    value = File.open(path, "rb") { |f| f.read }
+    return value.chomp
   end
   return default
 end
