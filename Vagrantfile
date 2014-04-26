@@ -25,6 +25,6 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/home/vagrant/host/", :nfs => true, id: "vagrant-root", :mount_options => ['nolock,vers=3,udp']
   config.vm.synced_folder music(), "/music/", :nfs => true, id: "vagrant-music", :mount_options => ['nolock,vers=3,udp']
 
-  config.vm.provision "shell", path: 'vagrant/provision' 
+  config.vm.provision "shell", inline: '/usr/local/bin/bash /home/vagrant/host/bootstrap.sh'
   config.ssh.shell = "csh"
 end

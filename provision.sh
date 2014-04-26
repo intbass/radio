@@ -1,5 +1,5 @@
 #!/bin/sh
-cd /home/vagrant/host
+cd $(dirname $(realpath "$0"))
 if [ -f "roles/${1}.yml" ]
 then
     BOOK="roles/${1}"
