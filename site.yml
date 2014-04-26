@@ -2,6 +2,7 @@
 - include: "roles/ipfw.yml"
 - include: "roles/keg-repo.yml"
 - include: "roles/screen.yml"
+- include: "roles/git.yml"
 - include: "roles/postfix.yml"
 - include: "roles/redis.yml"
 - include: "roles/supybot.yml"
