@@ -49,7 +49,7 @@
 
 - copy: src="supybot-plugin-install" dest="{{ supybot_dir_plugins }}/supybot-plugin-install" mode="755" owner=supybot group=supybot
 
-- shell: "{{ supybot_dir_plugins }}/supybot-plugin-install \"{{ supybot_dir_plugins }}\" \"{{ item }}\"" #git clone {{ item.url }} {{ supybot_dir_plugins }}/{{ item.name }}
+- shell: "{{ supybot_dir_plugins }}/supybot-plugin-install \"{{ item }}\""
   with_items: supybot_plugins
 
 # Supybot rewrites config files on exit and no option to reload them, so only bother if it's not running

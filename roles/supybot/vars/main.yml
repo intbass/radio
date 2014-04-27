@@ -385,437 +385,451 @@ supybot_plugins:
   - Admin:
       # Determines whether this plugin is loaded by default.
       enabled: True
-      # Determines whether this plugin is publicly visible.
-      public: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: False
 
   - Alias:
       # Determines whether this plugin is loaded by default.
       enabled: True
-      # Determines whether this plugin is publicly visible.
-      public: True
-      aliases_tr: translate $*
-      aliases_tr_locked: False
-      aliases_moar: more $*
-      aliases_moar_locked: False
-      aliases_define: google define $1
-      aliases_define_locked: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
+        aliases_tr: translate $*
+        aliases_tr_locked: False
+        aliases_moar: more $*
+        aliases_moar_locked: False
+        aliases_define: google define $1
+        aliases_define_locked: False
 
   - AutoMode:
       # Determines whether this plugin is loaded by default.
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: True
-
-      # Determines whether this plugin is enabled.
-      enable: False
-
-      # Determines whether this plugin will automode owners.
-      owner: True
-
-      # Determines whether the bot will "fall through" to halfop/voicing when
-      # auto-opping is turned off but auto-halfopping/voicing are turned on.
-      fallthrough: False
-
-      # Determines whether the bot will automatically op people with the
-      # <channel>,op capability when they join the channel.
-      op: True
-
-      # Determines whether the bot will automatically halfop people with the
-      # <channel>,halfop capability when they join the channel.
-      halfop: True
-
-      # Determines whether the bot will automatically voice people with the
-      # <channel>,voice capability when they join the channel.
-      voice: True
-
-      # Determines whether the bot will automatically ban people who join the
-      # channel and are on the banlist.
-      ban: True
-
-      # Determines how many seconds the bot will automatically ban a person
-      # when banning.
-      ban_period: 86400
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
+  
+        # Determines whether this plugin is enabled.
+        enable: False
+  
+        # Determines whether this plugin will automode owners.
+        owner: True
+  
+        # Determines whether the bot will "fall through" to halfop/voicing when
+        # auto-opping is turned off but auto-halfopping/voicing are turned on.
+        fallthrough: False
+  
+        # Determines whether the bot will automatically op people with the
+        # <channel>,op capability when they join the channel.
+        op: True
+  
+        # Determines whether the bot will automatically halfop people with the
+        # <channel>,halfop capability when they join the channel.
+        halfop: True
+  
+        # Determines whether the bot will automatically voice people with the
+        # <channel>,voice capability when they join the channel.
+        voice: True
+  
+        # Determines whether the bot will automatically ban people who join the
+        # channel and are on the banlist.
+        ban: True
+  
+        # Determines how many seconds the bot will automatically ban a person
+        # when banning.
+        ban_period: 86400
 
   - Ex:
-      public: True
-      enabled: True
       repo: 'https://github.com/beats-to/supybot-plugin-ex.git'
+      enabled: True
+      config:
+        public: True
 
   - Channel:
+      enabled: True
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether the bot will always try to rejoin a channel
-      # whenever it's kicked from the channel.
-      alwaysRejoin: True
+        # Determines whether the bot will always try to rejoin a channel
+        # whenever it's kicked from the channel.
+        alwaysRejoin: True
 
-      # Determines whether this plugin is loaded by default.
   - ChannelLogger:
+      # Determines whether this plugin is loaded by default.
       enabled: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether logging is enabled.
+        enable: True
 
-      # Determines whether logging is enabled.
-      enable: True
+        # Determines whether channel logfiles will be flushed anytime they're
+        # written to, rather than being buffered by the operating system.
+        flushImmediately: False
 
-      # Determines whether channel logfiles will be flushed anytime they're
-      # written to, rather than being buffered by the operating system.
-      flushImmediately: False
+        # Determines whether formatting characters (such as bolding, color,
+        # etc_) are removed when writing the logs to disk.
+        stripFormatting: True
 
-      # Determines whether formatting characters (such as bolding, color,
-      # etc_) are removed when writing the logs to disk.
-      stripFormatting: True
+        # Determines whether the logs for this channel are timestamped with the
+        # timestamp in   log_timestampFormat.
+        timestamp: True
 
-      # Determines whether the logs for this channel are timestamped with the
-      # timestamp in   log_timestampFormat.
-      timestamp: True
+        # Determines what string a message should be prefixed with in order not
+        # to be logged. If you don't want any such prefix, just set it to the
+        # empty string.
+        noLogPrefix: [nolog]
 
-      # Determines what string a message should be prefixed with in order not
-      # to be logged. If you don't want any such prefix, just set it to the
-      # empty string.
-      noLogPrefix: [nolog]
+        # Determines whether the bot will automatically rotate the logs for this
+        # channel. The bot will rotate logs when the timestamp for the log
+        # changes. The timestamp is set according to the 'filenameTimestamp'
+        # configuration variable.
+        rotateLogs: False
 
-      # Determines whether the bot will automatically rotate the logs for this
-      # channel. The bot will rotate logs when the timestamp for the log
-      # changes. The timestamp is set according to the 'filenameTimestamp'
-      # configuration variable.
-      rotateLogs: False
-
-      # Determines how to represent the timestamp used for the filename in
-      # rotated logs. When this timestamp changes, the old logfiles will be
-      # closed and a new one started. The format characters for the timestamp
-      # are in the time_strftime docs at python_org_ In order for your logs to
-      # be rotated, you'll also have to enable
-      #     ChannelLogger_rotateLogs.
-      filenameTimestamp: "%Y-%m-%d"
-
-      # Determines whether the bot will partition its channel logs into
-      # separate directories based on different criteria.
-      directories: True
-
-      # Determines whether the bot will use a network directory if using
-      # directories.
-      directories_network: True
-
-      # Determines whether the bot will use a channel directory if using
-      # directories.
-      directories_channel: True
-
-      # Determines whether the bot will use a timestamp (determined by
-      #     ChannelLogger_directories_timestamp_format) if using
-      # directories.
-      directories_timestamp: False
-
-      # Determines what timestamp format will be used in the directory
-      # stucture for channel logs if
-      #     ChannelLogger_directories_timestamp is True.
-      directories_timestamp_format: "%B"
+        # Determines how to represent the timestamp used for the filename in
+        # rotated logs. When this timestamp changes, the old logfiles will be
+        # closed and a new one started. The format characters for the timestamp
+        # are in the time_strftime docs at python_org_ In order for your logs to
+        # be rotated, you'll also have to enable
+        #     ChannelLogger_rotateLogs.
+        filenameTimestamp: "%Y-%m-%d"
+  
+        # Determines whether the bot will partition its channel logs into
+        # separate directories based on different criteria.
+        directories: True
+  
+        # Determines whether the bot will use a network directory if using
+        # directories.
+        directories_network: True
+  
+        # Determines whether the bot will use a channel directory if using
+        # directories.
+        directories_channel: True
+  
+        # Determines whether the bot will use a timestamp (determined by
+        #     ChannelLogger_directories_timestamp_format) if using
+        # directories.
+        directories_timestamp: False
+  
+        # Determines what timestamp format will be used in the directory
+        # stucture for channel logs if
+        #     ChannelLogger_directories_timestamp is True.
+        directories_timestamp_format: "%B"
 
   - Config:
+      enabled: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: False
 
-      # Determines whether this plugin is publicly visible.
-      public: False
-
-      # Determines whether this plugin is loaded by default.
   - Filter:
+      enabled: True
+      config:
+        # Determines whether this plugin is loaded by default.
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether or not to replace letters in the output of spellit.
-      spellit_replaceLetters: True
+        # Determines whether or not to replace letters in the output of spellit.
+        spellit_replaceLetters: True
 
-      # Determines whether or not to replace punctuation in the output of
-      # spellit.
-      spellit_replacePunctuation: True
+        # Determines whether or not to replace punctuation in the output of
+        # spellit.
+        spellit_replacePunctuation: True
 
-      # Determines whether or not to replace numbers in the output of spellit.
-      spellit_replaceNumbers: True
+        # Determines whether or not to replace numbers in the output of spellit.
+        spellit_replaceNumbers: True
 
-      # Determines the minimum number of a letters in a word before it will be
-      # shrunken by the shrink command/filter.
-      shrink_minimum: 4
+        # Determines the minimum number of a letters in a word before it will be
+        # shrunken by the shrink command/filter.
+        shrink_minimum: 4
 
-      # Determines whether this plugin is loaded by default.
+        # Determines whether this plugin is loaded by default.
   - Google:
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines the URL that will be sent to Google for the Referer field
-      # of the search requests. If this value is empty, a Referer will be
-      # generated in the following format: http://$server/$botName
-      referer: ''
+        # Determines the URL that will be sent to Google for the Referer field
+        # of the search requests. If this value is empty, a Referer will be
+        # generated in the following format: http://$server/$botName
+        referer: ''
 
-      # Determines whether the groups snarfer is enabled. If so, URLs at
-      # groups_google_com will be snarfed and their group/title messaged to
-      # the channel.
-      groupsSnarfer: True
+        # Determines whether the groups snarfer is enabled. If so, URLs at
+        # groups_google_com will be snarfed and their group/title messaged to
+        # the channel.
+        groupsSnarfer: True
 
-      # Determines whether the search snarfer is enabled. If so, messages
-      # (even unaddressed ones) beginning with the word 'google' will result
-      # in the first URL Google returns being sent to the channel.
-      searchSnarfer: True
+        # Determines whether the search snarfer is enabled. If so, messages
+        # (even unaddressed ones) beginning with the word 'google' will result
+        # in the first URL Google returns being sent to the channel.
+        searchSnarfer: True
 
-      # Determines whether the word 'google' in the bot's output will be made
-      # colorful (like Google's logo).
-      colorfulFilter: False
+        # Determines whether the word 'google' in the bot's output will be made
+        # colorful (like Google's logo).
+        colorfulFilter: False
 
-      # Determines whether results are bolded.
-      bold: True
+        # Determines whether results are bolded.
+        bold: True
 
-      # Determines the maximum number of results returned from the google
-      # command.
-      maximumResults: 4
+        # Determines the maximum number of results returned from the google
+        # command.
+        maximumResults: 4
 
-      # Determines what default language is used in searches. If left empty,
-      # no specific language will be requested.
-      defaultLanguage: lang_en
+        # Determines what default language is used in searches. If left empty,
+        # no specific language will be requested.
+        defaultLanguage: lang_en
 
-      # Determines what level of search filtering to use by default. 'active'
-      # - most filtering, 'moderate' - default filtering, 'off' - no filtering
-      searchFilter: moderate
+        # Determines what level of search filtering to use by default. 'active'
+        # - most filtering, 'moderate' - default filtering, 'off' - no filtering
+        searchFilter: moderate
 
   - I18nPlaceholder:
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is loaded by default.
+        # Determines whether this plugin is loaded by default.
   - Insult:
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether to include foul language in pools of randomly
-      # chosen adjective, amount and noun words.
-      allowFoul: True
+        # Determines whether to include foul language in pools of randomly
+        # chosen adjective, amount and noun words.
+        allowFoul: True
 
-      # Determines the base set of words used as the pool for nouns.
-      nouns: "bat toenails bug spit cat hair fish heads gunk pond scum rat retch red dye number-9 Sun IPC manuals waffle-house grits yoo-hoo squirrel guts snake bait buzzard gizzards cat-hair-balls pods armadillo snouts entrails snake snot eel ooze toxic waste Stimpy-drool poopy poop craptacular carpet droppings cold sores IE user"
+        # Determines the base set of words used as the pool for nouns.
+        nouns: "bat toenails bug spit cat hair fish heads gunk pond scum rat retch red dye number-9 Sun IPC manuals waffle-house grits yoo-hoo squirrel guts snake bait buzzard gizzards cat-hair-balls pods armadillo snouts entrails snake snot eel ooze toxic waste Stimpy-drool poopy poop craptacular carpet droppings cold sores IE user"
 
-      # Determines the set of foul words added to the pool of nouns.
-      foulNouns: "chicken piss dog vomit dung fat stomach-bile guano dog balls seagull puke cat bladders pus urine samples snake assholes rat-farts slurpee-backwash jizzum anal warts"
+        # Determines the set of foul words added to the pool of nouns.
+        foulNouns: "chicken piss dog vomit dung fat stomach-bile guano dog balls seagull puke cat bladders pus urine samples snake assholes rat-farts slurpee-backwash jizzum anal warts"
 
-      # Determines the base set of words used as the pool for amounts.
-      amounts: accumulation bucket gob coagulation half-mouthful heap mass mound petrification pile puddle stack thimbleful tongueful ooze quart bag plate
+        # Determines the base set of words used as the pool for amounts.
+        amounts: accumulation bucket gob coagulation half-mouthful heap mass mound petrification pile puddle stack thimbleful tongueful ooze quart bag plate
 
-      # Determines the set of foul words added to the pool of amounts.
-      foulAmounts: enema-bucketful ass-full assload
+        # Determines the set of foul words added to the pool of amounts.
+        foulAmounts: enema-bucketful ass-full assload
 
-      # Determines the base set of words used as the pool for adjectives.
-      adjectives: "acidic antique contemptible culturally-unsound despicable evil fermented festering foul fulminating humid impure inept inferior industrial left-over low-quality off-color petrified pointy-nosed salty sausage-snorfling tasteless tempestuous tepid tofu-nibbling unintelligent unoriginal uninspiring weasel-smelling wretched spam-sucking egg-sucking decayed halfbaked infected squishy porous pickled thick vapid unmuzzled bawdy vain lumpish churlish fobbing craven jarring fly-bitten fen-sucked spongy droning gleeking warped currish milk-livered surly mammering ill-borne beef-witted tickle-brained half-faced headless wayward onion-eyed beslubbering villainous lewd-minded cockered full-gorged rude-snouted crook-pated pribbling dread-bolted fool-born puny fawning sheep-biting dankish goatish weather-bitten knotty-pated malt-wormy saucyspleened motley-mind it-fowling vassal-willed loggerheaded clapper-clawed frothy ruttish clouted common-kissing folly-fallen plume-plucked flap-mouthed swag-bellied dizzy-eyed gorbellied weedy reeky measled spur-galled mangled impertinent bootless toad-spotted hasty-witted horn-beat yeasty hedge-born imp-bladdereddle-headed tottering hugger-muggered elf-skinned Microsoft-loving"
+        # Determines the base set of words used as the pool for adjectives.
+        adjectives: "acidic antique contemptible culturally-unsound despicable evil fermented festering foul fulminating humid impure inept inferior industrial left-over low-quality off-color petrified pointy-nosed salty sausage-snorfling tasteless tempestuous tepid tofu-nibbling unintelligent unoriginal uninspiring weasel-smelling wretched spam-sucking egg-sucking decayed halfbaked infected squishy porous pickled thick vapid unmuzzled bawdy vain lumpish churlish fobbing craven jarring fly-bitten fen-sucked spongy droning gleeking warped currish milk-livered surly mammering ill-borne beef-witted tickle-brained half-faced headless wayward onion-eyed beslubbering villainous lewd-minded cockered full-gorged rude-snouted crook-pated pribbling dread-bolted fool-born puny fawning sheep-biting dankish goatish weather-bitten knotty-pated malt-wormy saucyspleened motley-mind it-fowling vassal-willed loggerheaded clapper-clawed frothy ruttish clouted common-kissing folly-fallen plume-plucked flap-mouthed swag-bellied dizzy-eyed gorbellied weedy reeky measled spur-galled mangled impertinent bootless toad-spotted hasty-witted horn-beat yeasty hedge-born imp-bladdereddle-headed tottering hugger-muggered elf-skinned Microsoft-loving"
 
-      # Determines the set of foul words added to the pool of adjectives.
-      foulAdjectives: pignutted pox-marked rank malodorous penguin-molesting coughed-up hacked-up rump-fed boil-brained
+        # Determines the set of foul words added to the pool of adjectives.
+        foulAdjectives: pignutted pox-marked rank malodorous penguin-molesting coughed-up hacked-up rump-fed boil-brained
 
   - Karma:
       enabled: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether the bot will output shorter versions of the karma
+        # output when requesting a single thing's karma.
+        simpleOutput: False
 
-      # Determines whether the bot will output shorter versions of the karma
-      # output when requesting a single thing's karma.
-      simpleOutput: False
+        # Determines whether the bot will reply with a success message when
+        # something's karma is increased or decreased.
+        response: False
 
-      # Determines whether the bot will reply with a success message when
-      # something's karma is increased or decreased.
-      response: False
+        # Determines how many highest/lowest karma things are shown when karma
+        # is called with no arguments.
+        rankingDisplay: 3
 
-      # Determines how many highest/lowest karma things are shown when karma
-      # is called with no arguments.
-      rankingDisplay: 3
+        # Determines how many karma things are shown when the most command is
+        # called_'
+        mostDisplay: 25
 
-      # Determines how many karma things are shown when the most command is
-      # called_'
-      mostDisplay: 25
+        # Determines whether users can adjust the karma of their nick.
+        allowSelfRating: False
 
-      # Determines whether users can adjust the karma of their nick.
-      allowSelfRating: False
-
-      # Determines whether the bot will increase/decrease karma without being
-      # addressed.
-      allowUnaddressedKarma: False
+        # Determines whether the bot will increase/decrease karma without being
+        # addressed.
+        allowUnaddressedKarma: False
 
   - Math:
       # Determines whether this plugin is loaded by default.
       enabled: True
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
   - Misc:
       # Determines whether this plugin is loaded by default.
       enabled: True
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether the bot will list private plugins with the list
-      # command if given the --private switch. If this is disabled, non-owner
-      # users should be unable to see what private plugins are loaded.
-      listPrivatePlugins: True
+        # Determines whether the bot will list private plugins with the list
+        # command if given the --private switch. If this is disabled, non-owner
+        # users should be unable to see what private plugins are loaded.
+        listPrivatePlugins: True
 
-      # Determines the format string for timestamps in the Misc_last command.
-      # Refer to the Python documentation for the time module to see what
-      # formats are accepted. If you set this variable to the empty string,
-      # the timestamp will not be shown.
-      timestampFormat: "[%H:%M:%S]"
+        # Determines the format string for timestamps in the Misc_last command.
+        # Refer to the Python documentation for the time module to see what
+        # formats are accepted. If you set this variable to the empty string,
+        # the timestamp will not be shown.
+        timestampFormat: "[%H:%M:%S]"
 
-      # Determines whether or not the timestamp will be included in the output
-      # of last when it is part of a nested command
-      last_nested_includeTimestamp: False
+        # Determines whether or not the timestamp will be included in the output
+        # of last when it is part of a nested command
+        last_nested_includeTimestamp: False
 
-      # Determines whether or not the nick will be included in the output of
-      # last when it is part of a nested command
-      last_nested_includeNick: False
+        # Determines whether or not the nick will be included in the output of
+        # last when it is part of a nested command
+        last_nested_includeNick: False
 
   - Network:
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
   - Note:
       # Determines whether this plugin is loaded by default.
       enabled: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether the bot will notify people of their new messages
+        # when they join the channel. Normally it will notify them when they
+        # send a message to the channel, since oftentimes joins are the result
+        # of netsplits and not the actual presence of the user.
+        notify_onJoin: False
 
-      # Determines whether the bot will notify people of their new messages
-      # when they join the channel. Normally it will notify them when they
-      # send a message to the channel, since oftentimes joins are the result
-      # of netsplits and not the actual presence of the user.
-      notify_onJoin: False
+        # Determines whether the bot will repeatedly notify people of their new
+        # messages when they join the channel. That means when they join the
+        # channel, the bot will tell them they have unread messages, even if
+        # it's told them before.
+        notify_onJoin_repeatedly: False
 
-      # Determines whether the bot will repeatedly notify people of their new
-      # messages when they join the channel. That means when they join the
-      # channel, the bot will tell them they have unread messages, even if
-      # it's told them before.
-      notify_onJoin_repeatedly: False
-
-      # Determines the upper limit for automatically sending messages instead
-      # of notifications. I_e_, if this value is 2 and there are 2 new
-      # messages to notify a user about, instead of sending a notification
-      # message, the bot will simply send those new messages. If there are 3
-      # new messages, however, the bot will send a notification message.
-      notify_autoSend: 0
+        # Determines the upper limit for automatically sending messages instead
+        # of notifications. I_e_, if this value is 2 and there are 2 new
+        # messages to notify a user about, instead of sending a notification
+        # message, the bot will simply send those new messages. If there are 3
+        # new messages, however, the bot will send a notification message.
+        notify_autoSend: 0
 
   - Notradio:
       # Determines whether this plugin is loaded by default.
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: False
 
   - Owner:
       # Determines whether this plugin is loaded by default.
       enabled: True
+      config:
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines what quit message will be used by default. If the quit
-      # command is called without a quit message, this will be used. If this
-      # value is empty, the nick of the person giving the quit command will be
-      # used.
-      quitMsg: ''
+        # Determines what quit message will be used by default. If the quit
+        # command is called without a quit message, this will be used. If this
+        # value is empty, the nick of the person giving the quit command will be
+        # used.
+        quitMsg: ''
 
   - Praise:
       # Determines whether this plugin is loaded by default.
       enabled: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
-
-      # Determines whether the bot will show the ids of a praise when the
-      # praise is given.
-      showIds: False
+        # Determines whether the bot will show the ids of a praise when the
+        # praise is given.
+        showIds: False
 
   - Radio:
       # Determines whether this plugin is loaded by default.
       enabled: False
-
-      # Determines whether this plugin is publicly visible.
-      public: False
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: False
 
   - Scheduler:
       # Determines whether this plugin is loaded by default.
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
   - Seen:
       # Determines whether this plugin is loaded by default.
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
   - Status:
       # Determines whether this plugin is loaded by default.
       enabled: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether the cpu command will list the time taken by
+        # children as well as the bot's process.
+        cpu_children: True
 
-      # Determines whether the cpu command will list the time taken by
-      # children as well as the bot's process.
-      cpu_children: True
+        # Determines whether the cpu command will provide the number of threads
+        # spawned and active.
+        cpu_threads: False
 
-      # Determines whether the cpu command will provide the number of threads
-      # spawned and active.
-      cpu_threads: False
-
-      # Determines whether the cpu command will report the amount of memory
-      # being used by the bot.
-      cpu_memory: True
+        # Determines whether the cpu command will report the amount of memory
+        # being used by the bot.
+        cpu_memory: True
 
   - URL:
       # Determines whether this plugin is loaded by default.
       enabled: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
-
-      # Determines what URLs are to be snarfed and stored in the database in
-      # the channel; URLs matching the regexp given will not be snarfed. Give
-      # the empty string if you have no URLs that you'd like to exclude from
-      # being snarfed.
-      nonSnarfingRegexp: ''
+        # Determines what URLs are to be snarfed and stored in the database in
+        # the channel; URLs matching the regexp given will not be snarfed. Give
+        # the empty string if you have no URLs that you'd like to exclude from
+        # being snarfed.
+        nonSnarfingRegexp: ''
 
   - User:
       # Determines whether this plugin is loaded by default.
       enabled: True
-
-      # Determines whether this plugin is publicly visible.
-      public: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
   - Web:
       enabled: True
+      config:
+        # Determines whether this plugin is publicly visible.
+        public: True
 
-      # Determines whether this plugin is publicly visible.
-      public: True
+        # Determines whether the bot will output the HTML title of URLs it sees
+        # in the channel.
+        titleSnarfer: False
 
-      # Determines whether the bot will output the HTML title of URLs it sees
-      # in the channel.
-      titleSnarfer: False
+        # Determines what URLs are to be snarfed and stored in the database in
+        # the channel; URLs matching the regexp given will not be snarfed. Give
+        # the empty string if you have no URLs that you'd like to exclude from
+        # being snarfed.
+        nonSnarfingRegexp: ''
 
-      # Determines what URLs are to be snarfed and stored in the database in
-      # the channel; URLs matching the regexp given will not be snarfed. Give
-      # the empty string if you have no URLs that you'd like to exclude from
-      # being snarfed.
-      nonSnarfingRegexp: ''
-
-      # Determines the maximum number of bytes the bot will download via the
-      # 'fetch' command in this plugin.
-      fetch_maximum: 1024
+        # Determines the maximum number of bytes the bot will download via the
+        # 'fetch' command in this plugin.
+        fetch_maximum: 1024
 
     # Determines whether the bot will always load important plugins (Admin,
     # Channel, Config, Misc, Owner, and User) regardless of what their

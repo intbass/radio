@@ -1,28 +1,22 @@
 #!/usr/local/bin/python2
 
-from __future__ import print_function
 import sys
 import os
 import re
 import json
 import subprocess
-from pprint import pformat
 
-fil = open('/tmp/sup', 'a')
-plugin_path = sys.argv[1]
-data = sys.argv[2]
-data = re.sub("'",'"',data)
-data = re.sub("True",'"TRUE"',data)
-data = re.sub("False",'"FALSE"',data)
+plugin_path = os.path.dirname(os.path.realpath(__file__))
+data = sys.argv[1]
+data = re.sub("'", '"', data)
+data = re.sub("True", '"TRUE"', data)
+data = re.sub("False", '"FALSE"', data)
 data = json.loads(data)
 name = data.keys()[0]
 plugin_data = data[name]
-print(pformat(name), file=fil)
 if (os.path.isdir('{}/{}/.git'.format(plugin_path, name))):
-    print('Git repo to update: {}'.format(name), file=fil)
     subprocess.call(["git", "fetch", "origin"])
     subprocess.call(["git", "pull", "--ff-only"])
 elif 'repo' in data[name]:
     repo = data[name]['repo']
-    print('Git repo to clone: {}'.format(repo), file=fil)
     subprocess.call(["git", "clone", repo, '{}/{}'.format(plugin_path, name)])
