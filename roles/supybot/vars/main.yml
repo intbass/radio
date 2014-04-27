@@ -935,10 +935,10 @@ supybot_protocols_irc_ping_interval: 120
       # prevent plugins from sending the same message multiple times; most of
       # the time it doesn't matter, unless you're doing certain kinds of
       # plugin hacking.
-supybot_protocols_irc_queueing_duplicates: False
+supybot_protocols_irc_queuing_duplicates: False
         # Determines how many seconds must elapse between JOINs sent to the
         # server.
-supybot_protocols_irc_queueing_rateLimit_join: 0.0
+supybot_protocols_irc_queuing_rateLimit_join: 0.0
 
       # Determines how many bytes the bot will 'peek' at when looking through
       # a URL for a doctype or title or something similar. It'll give up after
