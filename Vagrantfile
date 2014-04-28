@@ -8,7 +8,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "chef/freebsd-10.0"
 
   config.vm.provider :virtualbox do |vb|
-  #  vb.customize ["startvm", :id, "--type", "gui"]
+    if isdefined('gui')
+      vb.customize ["startvm", :id, "--type", "gui"]
+    end
     vb.customize ["modifyvm", :id, "--memory", "512"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]

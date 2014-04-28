@@ -15,6 +15,10 @@ def save(name, value)
   File.open(File.dirname(__FILE__)+"/../.vagrant." + name, 'w') {|f| f.write(value) } 
 end
 
+def isdefined(name)
+  return File.file? File.dirname(__FILE__) + "/../.vagrant." + name
+end
+
 def music()
   path = load('music', '')
   if File.directory?(path)
