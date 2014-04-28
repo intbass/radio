@@ -23,7 +23,7 @@ fi
 ${cmd} -f flush
 for FILE in /etc/ipfw.rules.d/*.rules
 do
-    . $FILE
+    $FILE
 done
 
 ${add} 20000 allow tcp from any to any 22 in keep-state
