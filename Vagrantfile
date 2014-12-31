@@ -4,7 +4,7 @@
 require 'yaml'
 config = {}
 begin
-  config = YAML.load_file('group_vars/local.yaml')
+  config = YAML.load_file('group_vars/local.yml')
 rescue NoMethodError, IOError, Errno::ENOENT
   puts 'No local variables found'
 end

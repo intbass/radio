@@ -1,2 +1,3 @@
 .vagrant*
 venv
+group_vars/local.*

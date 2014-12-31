@@ -1,0 +1,4 @@
+# /etc/sysconfig/docker
+
+# Modify these options if you want to change the way the docker daemon runs
+OPTIONS="--selinux-enabled {% if docker_mirror is defined %}--registry-mirror={{ docker_mirror }}{% endif %} -H fd://"
