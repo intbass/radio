@@ -1,7 +1,0 @@
----
-network_public_interface: em2
-network_public_subnet: 192.168.2.0/24
-network_dns_server:
-- address: 8.8.8.8
-- address: 8.8.4.4
-network_safe_interfaces:

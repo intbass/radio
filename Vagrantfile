@@ -1,34 +1,59 @@
-# -*- mode: ruby; -*-
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-require File.dirname(__FILE__) + '/vagrant/vars.rb'
-require File.dirname(__FILE__) + '/vagrant/net.rb'
+require 'yaml'
+config = {}
+begin
+  config = YAML.load_file('group_vars/local.yaml')
+rescue NoMethodError, IOError, Errno::ENOENT
+  puts 'No local variables found'
+end
 
-Vagrant.configure("2") do |config|
-  config.vm.guest = :freebsd
-  config.vm.box = "chef/freebsd-10.0"
+# Install an isolated copy of python to run ansible
+def install_venv(venv)
+  File.directory?(venv) || `virtualenv venv`
+  ENV['VIRTUAL_ENV'] = venv
+  ENV['PATH'] = File.join(venv, 'bin') + ':' + ENV['PATH']
+end
 
-  config.vm.provider :virtualbox do |vb|
-    if isdefined('gui')
-      vb.customize ["startvm", :id, "--type", "gui"]
-    end
-    vb.customize ["modifyvm", :id, "--memory", "512"]
-    vb.customize ["modifyvm", :id, "--cpus", "2"]
-    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
-    vb.customize ["modifyvm", :id, "--audio", "none"]
-    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
-    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
-    vb.customize ["modifyvm", :id, "--nictype3", "virtio"]
+# Install ansible in the isolated environment
+def pip_ansible(venv)
+  ansibin = File.join(venv, 'bin', 'ansible')
+  File.executable?(ansibin) || `#{venv}/bin/pip install ansible docker-py`
+end
+
+# Upgrade ansible every monthish
+def pip_upgrade(venv)
+  stat = File.stat(venv)
+  Date.parse(stat.mtime.to_s) > Date.today - 30 && return
+  `#{venv}/bin/pip install --upgrade`
+  FileUtils.touch venv
+end
+
+def install_ansible
+  local = File.dirname(File.expand_path(__FILE__))
+  venv  = File.join(local, 'venv')
+  install_venv(venv)
+  pip_ansible(venv)
+  pip_upgrade(venv)
+end
+install_ansible
+
+Vagrant.configure(2) do |host|
+  host.vm.hostname = 'dev.beats.to'
+  host.vm.box = 'box-cutter/centos70-docker'
+  host.vm.network :public_network, type: :dhcp
+  host.vm.provider :virtualbox do |vb|
+    vb.gui = true
+    vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+    vb.memory = 2048
+    vb.cpus = 2
   end
- 
-  config.vm.hostname = "dev.beats.to"
-  network config.vm, "private"
-  network config.vm, "public"
-  # Use NFS as a shared folder
-  # I dislike /vagrant b/c /var
-  config.vm.synced_folder ".", "/vagrant", disabled: true, id: "vagrant-root"
-  config.vm.synced_folder ".", "/home/vagrant/host/", :nfs => true, id: "vagrant-root", :mount_options => ['nolock,vers=3,udp']
-  config.vm.synced_folder music(), "/music/", :nfs => true, id: "vagrant-music", :mount_options => ['nolock,vers=3,udp']
 
-  config.vm.provision "shell", inline: '/bin/sh /home/vagrant/host/bootstrap.sh'
-  config.ssh.shell = "csh"
+  host.vm.provision 'ansible' do |ansible|
+    ansible.playbook = 'playbook.yml'
+    ENV.key?('TAGS') && ansible.tags = ENV['TAGS']
+    ENV.key?('ANSIBLAB') && ansible.verbose = ENV['ANSIBLAB']
+    ansible.extra_vars = config
+  end
 end

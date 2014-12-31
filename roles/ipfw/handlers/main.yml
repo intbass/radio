@@ -1,3 +1,0 @@
----
-- name: restart service 
-  service: name=ipfw state=restarted

@@ -1,0 +1,6 @@
+- name: docker
+  hosts: all
+  sudo: true
+  tags: [ 'docker' ]
+  tasks:
+    yum: name=docker-io state=latest

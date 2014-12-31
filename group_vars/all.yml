@@ -1,7 +1,0 @@
----
-network_hostname: dev.beats.to
-network_domain: beats.to
-supybot_ignores:
-admin_users:
-- root
-- vagrant

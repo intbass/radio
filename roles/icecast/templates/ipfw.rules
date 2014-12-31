@@ -1,4 +1,0 @@
-#!/bin/sh
-
-${add} 10000 allow tcp from any to any {{ icecast_port }} in keep-state
-${add} 10001 allow tcp from any to any {{ icecast_port }} out keep-state

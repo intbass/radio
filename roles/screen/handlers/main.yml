@@ -1,3 +1,0 @@
----
-- name: assemble screenrc
-  assemble: src=/home/vagrant/.screenrc.d dest=/home/vagrant/.screenrc owner=vagrant mode=400

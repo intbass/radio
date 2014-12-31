@@ -1,4 +1,0 @@
-source /usr/local/share/screen/multi
-source ${HOME}/.screenrc
-screen -t shell sudo -i -u icecast
-screen -t errors tail -f /var/log/icecast/error.log

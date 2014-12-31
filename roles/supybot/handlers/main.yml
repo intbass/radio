@@ -1,5 +1,0 @@
----
-- name: restart supybot 
-  service: name=supybot state=restarted
-- name: restart inspircd 
-  service: name=inspircd state=restarted

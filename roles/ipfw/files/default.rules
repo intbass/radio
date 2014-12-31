@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# 65xxx What happens now?
- 
-# deny and log all packets that fell through to see what they are
-${add} 65500 allow log all from any to any
-#${add} 65530 deny log all from any to any

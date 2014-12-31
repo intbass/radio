@@ -1,5 +1,0 @@
----
-- hosts: radio
-  gather_facts: false
-  roles:
-  - ipfw

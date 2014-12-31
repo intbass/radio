@@ -1,3 +1,0 @@
----
-- name: restart liquidsoap 
-  service: name=liquidsoap state=restarted

@@ -1,8 +1,0 @@
----
-- name: install package
-  pkgng: name={{ item }} state=present
-  with_items:
-   - bash
-
-- name: install fdescfs
-  lineinfile: dest=/etc/fstab regexp="^fdesc */dev/fd *fdescfs *rw *0 *0" line='fdesc /dev/fd fdescfs rw 0 0'

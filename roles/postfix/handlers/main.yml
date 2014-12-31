@@ -1,9 +1,0 @@
----
-- name: stop sendmail
-  service: name=sendmail state=stopped
-- name: start postfix 
-  service: name=postfix state=started
-- name: restart postfix 
-  service: name=postfix state=restarted
-- name: reload postfix 
-  shell: postfix reload
