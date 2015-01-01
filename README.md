@@ -3,26 +3,38 @@ Development Radio
 
 You want to run your own radio station?
 
-Start by installing [vagrant](http://vagrantup.com/) and [git](http://git-scm.com/)
+Prerequsites
+------------
 
-Then clone this repository
+* [vagrant](http://vagrantup.com/)
+* [python](https://www.python.org/)
+* [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html)
+* [git](http://git-scm.com/)
+
+Development
+-----------
 
 $ git clone https://github.com/beats-to/radio.git
-
-then start your radio
-
 $ cd radio
 $ vagrant up
 
 This will do the following;
 
-* Download an image of the freebsd-10.0 operating system
-* Configure it with 3 network interfaces (nat, host-only and bridged)
-* NFS mount the current directory on the host as guest:/usr/home/vagrant/host
-* prompt you for the music directory on the host and NFS mount that as guest:/music
-* Install and run a [provision]() script
-  The provision script uses [anisble]() on the guest to install and configure the software needed, 
-  it should be safe to run multiple times to always end up at the same result.
+* Download a Centos 7 vm image
+* Configure it with 2 network interfaces (nat and bridged)
+* mount the current directory on the host as guest:/vagrant/
+#* prompt you for the music directory on the host and NFS mount that as guest:/music
+* Create a local python virtualenv
+* Install and update once a month the ansible install
+* Run the ansible provisioner against the guest
+
+Environment
+-----------
+
+ANSIBLAB is used to set the ansible verbosity.
+TAGS is used to selectively apply ansible plays.
+
+any ansible configuration values can be overridden in group_vars/local.yml
 
 
 
