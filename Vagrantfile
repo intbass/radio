@@ -24,6 +24,6 @@ Vagrant.configure(2) do |host|
   end
 
   host.vm.synced_folder '.', '/vagrant', disabled: true, id: 'vagrant-root'
-  host.vm.synced_folder '.', '/host', id: 'vagrant-root'
+  host.vm.synced_folder '.', '/home/vagrant/host', id: 'vagrant-root'
   host.vm.synced_folder music, '/music', id: 'vagrant-music'
 end
