@@ -6,7 +6,7 @@ require 'yaml'
 def ansible_config
   config = {}
   begin
-    config = YAML.load_file('../group_vars/local.yml')
+    config = YAML.load_file(File.dirname(__FILE__) + '/../group_vars/local.yml')
   rescue NoMethodError, IOError, Errno::ENOENT
     puts 'No local variables found'
   end
