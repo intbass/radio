@@ -1,0 +1,13 @@
+---
+- name: config directory
+  file: path=/etc/liquidsoap state=directory
+- name: configuration file
+  template: src=radio.liq.j2 dest=/etc/liquidsoap/radio.liq
+  notify: restart
+- name: 'swiss-army knife for multimedia streaming'
+  tags: [ 'radio', 'stream' ]
+  docker: image='ddub/liquidsoap' name='liquidsoap'
+          hostname='{{ ansible_hostname }}'
+          ports='1337:1337,8888:8888'
+          volumes='/etc/liquidsoap:/config:ro,/music:/tracks:ro,/music/recs:/recs'
+          command='/usr/bin/liquidsoap /config/radio.liq'

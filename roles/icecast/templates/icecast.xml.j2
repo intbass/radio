@@ -1,0 +1,40 @@
+<icecast>
+    <limits>
+        <clients>{{ icecast_clients|default(100) }}</clients>
+        <sources>{{ icecast_sources|default(2) }}</sources>
+        <threadpool>{{ icecast_threadpool|default(5) }}</threadpool>
+        <queue-size>{{ icecast_queue_size|default(524288) }}</queue-size>
+        <client-timeout>{{ icecast_client_timeout|default(30) }}</client-timeout>
+        <header-timeout>{{ icecast_header_timeout|default(15) }}</header-timeout>
+        <source-timeout>{{ icecast_source_timeout|default(10) }}</source-timeout>
+        <burst-on-connect>{{ icecast_burst_on_connect|default(1) }}</burst-on-connect>
+        <burst-size>{{ icecast_burst_size|default(65535) }}</burst-size>
+    </limits>
+    <authentication>
+        <source-password>{{ icecast_source_password|default('hackme') }}</source-password>
+        <relay-password>{{ icecast_relay_password|default('hackme') }}</relay-password>
+        <admin-user>{{ icecast_admin_user|default('admin') }}</admin-user>
+        <admin-password>{{ icecast_admin_password|default('hackme') }}</admin-password>
+    </authentication>
+    <hostname>{{ icecast_hostname|default('localhost') }}</hostname>
+    <listen-socket>
+        <port>{{ icecast_port|default(8000) }}</port>
+    </listen-socket>
+    <fileserve>1</fileserve>
+    <paths>
+        <basedir>/usr/share/icecast2</basedir>
+        <logdir>/var/log/icecast2</logdir>
+        <webroot>/usr/share/icecast2/web</webroot>
+        <adminroot>/usr/share/icecast2/admin</adminroot>
+        <alias source="/" dest="/status.xsl"/>
+    </paths>
+    <logging>
+        <accesslog>access.log</accesslog>
+        <errorlog>error.log</errorlog>
+      	<loglevel>3</loglevel>
+      	<logsize>10000</logsize>
+    </logging>
+    <security>
+        <chroot>0</chroot>
+    </security>
+</icecast>

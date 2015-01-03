@@ -9,7 +9,7 @@
   sudo: true
   vars:
   - ansible_python_interpreter: python
-  tags: [ 'containers', 'boxes' ]
+  tags: [ 'containers', 'ctrs' ]
   tasks:
   - name: 'Container Advisor'
     tags: [ 'docker', 'monitor', 'stats' ]
@@ -17,3 +17,9 @@
             hostname='{{ ansible_hostname }}'
             ports='8088:8080'
             volumes='/:/rootfs:ro,/var/run:/var/run:rw,/sys:/sys:ro,/var/lib/docker/:/var/lib/docker:ro'
+
+- name: radio
+  hosts: all
+  sudo: true
+  tags: [ 'radio' ]
+  roles: [ 'icecast', 'liquidsoap' ]
