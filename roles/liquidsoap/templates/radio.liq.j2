@@ -9,7 +9,7 @@ set("log.stdout", true)
 
 # Telnet server
 set("server.telnet",true)
-set("server.telnet.bind_addr","{{ liquidsoap_telnet_host|default('127.0.0.1') }}")
+set("server.telnet.bind_addr","{{ liquidsoap_telnet_host|default('0.0.0.0') }}")
 set("server.telnet.port", {{ liquidsoap_telnet_port|default(1337) }})
 
 # harbor
@@ -126,7 +126,7 @@ radiostream = on_metadata( call_notify, radiostream )
 ignore(register_flow(radio='development', website='radio.dev', description='development radio',
                      genre='dnb', server='http://172.17.42.1:5000/ls/register',
                      email='admin@radio.dev', user='myuser', password='password',
-                     streams=[("ogg/128k",'http://radio.dev/streams')],
+                     streams=[("mp3/128k",'http://radio.dev/streams')],
                      radiostream))
 
 
@@ -140,7 +140,7 @@ output.file({{ liquidsoap_recording_format|default('%flac(samplerate=44100)') }}
         reopen_on_metadata=true,
         "{{ liquidsoap_recording_path|default('/recs') }}/{{ liquidsoap_recording_pattern|default('%Y%m%d-%H%M-$(artist)-$(title).flac') }}", live)
 
-{% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%vorbis', 'mount': 'hello', 'host': 'host', 'port': 8000, 'password': 'password' }]) %}
+{% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%mp3', 'mount': 'stream', 'host': '172.17.42.1', 'port': 8000, 'password': 'hackme' }]) %}
 output.icecast({{ mount.format }},mount="/{{ mount.mount }}",
     host="{{ mount.host }}", port = {{ mount.port }},
 	password = "{{ mount.password }}",
