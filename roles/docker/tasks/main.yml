@@ -4,5 +4,6 @@
 - name: configure docker daemon 
   template: src=sysconfig.j2 dest=/etc/sysconfig/docker
   notify: restart docker daemon
+- service: name=docker state=started enabled=true
 - name: install python docker client
   yum: name=python-docker-py state=installed
