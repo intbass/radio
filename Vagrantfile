@@ -6,7 +6,7 @@ require_relative 'vagrant/ansible.rb'
 
 Vagrant.configure(2) do |host|
   host.vm.hostname = 'dev.beats.to'
-  host.vm.box = 'box-cutter/centos70-docker'
+  host.vm.box = 'zimbatm/nixbox64'
   host.vm.network :public_network, type: :dhcp
   host.vm.provider :virtualbox do |vb|
     vb.gui = true
@@ -15,13 +15,12 @@ Vagrant.configure(2) do |host|
     vb.cpus = 2
   end
 
-  host.vm.provision 'ansible' do |ansible|
-    install_ansible
-    ansible.playbook = 'playbook.yml'
-    ENV.key?('TAGS') && ansible.tags = ENV['TAGS']
-    ENV.key?('ANSIBLAB') && ansible.verbose = ENV['ANSIBLAB']
-    ansible.extra_vars = ansible_config
-  end
+  # Add the htop package
+  host.vm.provision :nixos, :expression => {
+    environment: {
+      systemPackages: [:vim]
+    }
+  }
 
   host.vm.synced_folder '.', '/vagrant', disabled: true, id: 'vagrant-root'
   host.vm.synced_folder '.', '/home/vagrant/host', id: 'vagrant-root'
