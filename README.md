@@ -14,13 +14,15 @@ Prerequsites
 Development
 -----------
 
+```
 $ git clone https://github.com/beats-to/radio.git
 $ cd radio
 $ vagrant up
+```
 
 This will do the following;
 
-* Download a Centos 7 vm image
+* Download a Debian 7 vm image
 * Configure it with 2 network interfaces (nat and bridged)
 * mount the current directory on the host as guest:/vagrant/
 #* prompt you for the music directory on the host and NFS mount that as guest:/music
