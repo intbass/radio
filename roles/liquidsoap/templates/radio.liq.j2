@@ -1,6 +1,6 @@
 #!/usr/bin/liquidsoap
 
-set("init.daemon",false)
+set("init.daemon",true)
 
 # Some logging
 set("log.file",true)
@@ -34,30 +34,15 @@ def live_start(headers)
     log("Live-metadata artist: " ^ artist)
 
     ignore(server.execute("live.insert title=\"#{title}\", artist=\"#{artist}\", album=\"LIVE\""))
-    #system( "/home/beats/bin/notify.py --live --title \"#{title}\" --artist=\"#{artist}\" --channel={{ liquidsoap_station_name|default('radio') }} &" )
 end
 
 def live_stop()
-    #system( "/home/beats/bin/notify.py --dead --channel={{ liquidsoap_station_name|default('radio') }} &" )
     system( "/bin/echo notify.py --dead --channel={{ liquidsoap_station_name|default('radio') }} &" )
 end
 
 # Log the outbound meta data
 def call_notify( m )
-    #system( "/home/beats/bin/notify.py --channel={{ liquidsoap_station_name|default('radio') }} --album=\""^m["album"]^"\" --title=\""^m["title"]^"\" --artist=\""^m["artist"]^"\" &" )
-    system( "echo notify.py --channel={{ liquidsoap_station_name|default('radio') }} --album=\""^m["album"]^"\" --title=\""^m["title"]^"\" --artist=\""^m["artist"]^"\" &" )
-end
-
-# Harbor Authenticator
-def live_auth(user,password) =
-    #ret = get_process_lines("/home/beats/bin/live_auth.py --logfile /home/beats/logs/live_auth.log {{ liquidsoap_station_name|default('radio') }} #{user} #{password}")
-    ret = get_process_lines("curl http://172.17.42.1:5000/live_auth/{{ liquidsoap_station_name|default('radio') }}/#{user}/#{password}")
-    ret = list.hd(ret)
-    if (ret == "true") then
-        true
-    else
-        false
-    end
+    system( "/bin/echo notify.py --channel={{ liquidsoap_station_name|default('radio') }} --album=\""^m["album"]^"\" --title=\""^m["title"]^"\" --artist=\""^m["artist"]^"\" &" )
 end
 
 # crossfader
@@ -104,7 +89,6 @@ live = input.harbor(
             max=240.0,
             icy = true,
             port = 8888,
-            auth = live_auth,
             "live")
 
 # silence detection 
@@ -123,13 +107,6 @@ radiostream = fallback(
 # TODO ignore failures in the metadata update script 
 radiostream = on_metadata( call_notify, radiostream )
 
-ignore(register_flow(radio='development', website='radio.dev', description='development radio',
-                     genre='dnb', server='http://172.17.42.1:5000/ls/register',
-                     email='admin@radio.dev', user='myuser', password='password',
-                     streams=[("mp3/128k",'http://radio.dev/streams')],
-                     radiostream))
-
-
 #
 # -- Outputs --
 #
@@ -140,7 +117,7 @@ output.file({{ liquidsoap_recording_format|default('%flac(samplerate=44100)') }}
         reopen_on_metadata=true,
         "{{ liquidsoap_recording_path|default('/recs') }}/{{ liquidsoap_recording_pattern|default('%Y%m%d-%H%M-$(artist)-$(title).flac') }}", live)
 
-{% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%mp3', 'mount': 'stream', 'host': '172.17.42.1', 'port': 8000, 'password': 'hackme' }]) %}
+{% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%mp3', 'mount': 'stream', 'host': '127.0.0.1', 'port': 8000, 'password': 'hackme' }]) %}
 output.icecast({{ mount.format }},mount="/{{ mount.mount }}",
     host="{{ mount.host }}", port = {{ mount.port }},
 	password = "{{ mount.password }}",
