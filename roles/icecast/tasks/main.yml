@@ -1,11 +1,7 @@
+- name: Install Icecast2 server
+  apt: name=icecast2 state=present
 - name: config directory
   file: path=/etc/icecast2 state=directory
 - name: configuration file
   template: src=icecast.xml.j2 dest=/etc/icecast2/icecast.xml
   notify: restart
-- name: 'free server software for streaming multimedia'
-  tags: [ 'radio', 'stream' ]
-  docker: image='moul/icecast' name='icecast'
-          hostname='{{ ansible_hostname }}'
-          volumes='/etc/icecast2/icecast.xml:/etc/icecast2/icecast.xml'
-          ports='8000:8000'

@@ -1,23 +1,4 @@
-- name: docker
-  hosts: all
-  sudo: true
-  tags: [ 'docker' ]
-  roles: [ 'docker' ]
-
-- name: containers
-  hosts: all
-  sudo: true
-  vars:
-  - ansible_python_interpreter: python
-  tags: [ 'containers', 'ctrs' ]
-  tasks:
-  - name: 'Container Advisor'
-    tags: [ 'docker', 'monitor', 'stats' ]
-    docker: image='google/cadvisor' name='cadvisor'
-            hostname='{{ ansible_hostname }}'
-            ports='8088:8080'
-            volumes='/:/rootfs:ro,/var/run:/var/run:rw,/sys:/sys:ro,/var/lib/docker/:/var/lib/docker:ro'
-
+---
 - name: radio
   hosts: all
   sudo: true
