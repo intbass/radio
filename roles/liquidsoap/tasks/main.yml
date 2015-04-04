@@ -1,4 +1,6 @@
 ---
+- name: install liquidsoap
+  apt: name=liquidsoap state=present
 - name: config directory
   file: path=/etc/liquidsoap state=directory
 - name: configuration file
@@ -9,10 +11,3 @@
 - name: check recording directory is writable - if this fails then the host system may need to adjust the permissions on the recs folder
   shell: ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
   changed_when: 0
-#- name: 'swiss-army knife for multimedia streaming'
-#  tags: [ 'radio', 'stream' ]
-#  docker: image='ddub/liquidsoap' name='liquidsoap'
-#          hostname='{{ ansible_hostname }}'
-#          ports='1337:1337,8888:8888'
-#          volumes='/etc/liquidsoap:/config:ro,/music:/tracks:ro,/music/recs:/recs'
-#          command='/usr/bin/liquidsoap /config/radio.liq'
