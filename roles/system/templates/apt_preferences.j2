@@ -1,6 +1,27 @@
-Package: liquidsoap libc6 libmagic1
-Pin: release a=testing
-Pin-Priority: 991
+## Liquidsoap
+#Package: liquidsoap libc6 libmagic1 liquidsoap-plugin-icecast
+#Pin: release a=testing
+#Pin-Priority: 991
+#
+## Liquidsoap - Sox
+#Package: sox libsox-fmt-alsa libsox-fmt-ao libsox-fmt-oss libsox-fmt-pulse libsox-fmt-base libsox2 libgomp1
+#Pin: release a=stable
+#Pin-Priority: 991
+#
+## Liquidsoap - Taglib
+#Package: liquidsoap-plugin-taglib libtag1c2a libtag1-vanilla libstdc++6 gcc-4.9-base libc6 libgcc1 libstdc++6 zlib1g linux-headers-3.2.0-4-common
+#Pin: release a=testing
+#Pin-Priority: 991
+#
+## Liquidsoap - OGG
+#Package: liquidsoap-plugin-vorbis liquidsoap-plugin-ogg
+#Pin: release a=testing
+#Pin-Priority: 991
+#
+## Liquidsoap - MP3
+#Package: liquidsoap-plugin-lame liquidsoap-plugin-mad
+#Pin: release a=testing
+#Pin-Priority: 991
 
 Package: *
 Pin: release a=stable
@@ -13,3 +34,4 @@ Pin-Priority: 650
 Package: *
 Pin: release a=unstable
 Pin-Priority: 600
+

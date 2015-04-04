@@ -1,6 +1,43 @@
 ---
-- name: install liquidsoap
-  apt: name=liquidsoap state=present
+#- name: liquidsoap taglib
+#  apt: name={{ item }} state=present
+#  with_items:
+#      - liquidsoap-plugin-taglib
+#      - libtag1-vanilla
+#      - libtag1c2a
+#      - libstdc++6
+#      - gcc-4.9-base
+#      - libgcc1
+#      - zlib1g
+#      - libc6
+#- name: liquidsoap sox
+#  apt: name={{ item }} state=present
+#  with_items:
+#    - sox
+#    - libsox-fmt-alsa
+#    - libsox-fmt-ao
+#    - libsox-fmt-oss
+#    - libsox-fmt-pulse
+#    - libsox-fmt-base
+#    - libsox2
+#    - libgomp1
+#- name: additional liquidsoap stuff
+#  apt: name={{ item }} state=present
+#  with_items:
+#      - mp3gain
+#      - vorbisgain
+#      - vorbis-tools
+- name: install liquidsoap 
+  apt: name={{ item }} state=present default_release=testing
+  with_items:
+      - liquidsoap
+      - liquidsoap-plugin-mad
+      - liquidsoap-plugin-lame
+      - liquidsoap-plugin-vorbis
+      #- liquidsoap-plugin-flac
+      - liquidsoap-plugin-icecast
+      #- multiarch-support
+      - festival
 - name: config directory
   file: path=/etc/liquidsoap state=directory
 - name: configuration file
@@ -11,3 +48,5 @@
 - name: check recording directory is writable - if this fails then the host system may need to adjust the permissions on the recs folder
   shell: ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
   changed_when: 0
+- name: check liquidsoap is running
+  service: name=liquidsoap state=started enabled=yes

@@ -1,3 +1,4 @@
 ---
 - name: restart
-  docker: image=ddub/liquidsoap name=liquidsoap state=restarted
+  #docker: image=ddub/liquidsoap name=liquidsoap state=restarted
+  service: name=liquidsoap state=started enabled=yes
