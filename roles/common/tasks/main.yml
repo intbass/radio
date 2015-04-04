@@ -1,0 +1,6 @@
+- name: Update apt sources
+  template: src=apt_sources.j2 dest=/etc/apt/sources.list
+- name: Update apt preferences
+  template: src=apt_preferences.j2 dest=/etc/apt/preferences
+- name: Update apt cache
+  apt: update_cache=yes
