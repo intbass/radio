@@ -21,4 +21,9 @@
   shell: ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
   changed_when: 0
 - name: check liquidsoap is running
-  service: name=liquidsoap state=started enabled=yes arguments=""
+  service:
+    name=liquidsoap
+    state=started
+    enabled=yes
+    arguments=""
+    pattern="/usr/bin/liquidsoap -d /etc/liquidsoap/radio.liq"

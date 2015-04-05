@@ -7,4 +7,8 @@
   template: src=etc_default_icecast2.xml.j2 dest=/etc/default/icecast2
   notify: restart
 - name: check icecast is running
-  service: name=icecast2 state=started enabled=yes
+  service:
+    name=icecast2
+    state=started
+    enabled=yes
+    pattern="/usr/bin/icecast2 -b -c /etc/icecast2/icecast.xml"
