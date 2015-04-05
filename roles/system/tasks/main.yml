@@ -1,6 +1,6 @@
-- name: Update apt sources
-  template: src=apt_sources.j2 dest=/etc/apt/sources.list
-- name: Update apt preferences
-  template: src=apt_preferences.j2 dest=/etc/apt/preferences
+- name: Testing repository - main, contrib and non-free branches
+  apt_repository: repo='deb http://http.us.debian.org/debian testing main non-free contrib' state=present
+- name: Testing security updates repository
+  apt_repository: repo='deb http://security.debian.org/ testing/updates main contrib non-free' state=present
 - name: Update apt cache
   apt: update_cache=yes

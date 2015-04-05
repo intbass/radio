@@ -3,4 +3,7 @@
   hosts: all
   sudo: true
   tags: [ 'radio' ]
-  roles: [ 'system', 'icecast', 'liquidsoap' ]
+  roles:
+    - 'system'
+    - 'icecast'
+    - 'liquidsoap'
