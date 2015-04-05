@@ -25,5 +25,5 @@
     name=liquidsoap
     state=started
     enabled=yes
-    arguments=""
     pattern="/usr/bin/liquidsoap -d /etc/liquidsoap/radio.liq"
+  notify: restart
