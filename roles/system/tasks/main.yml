@@ -2,5 +2,5 @@
   apt_repository: repo='deb http://http.us.debian.org/debian testing main non-free contrib' state=present
 - name: Testing security updates repository
   apt_repository: repo='deb http://security.debian.org/ testing/updates main contrib non-free' state=present
-- name: Update apt cache
-  apt: update_cache=yes
+#- name: Update apt cache
+#  apt: update_cache=yes
