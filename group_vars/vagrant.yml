@@ -1,0 +1,11 @@
+---
+postgresql_users:
+  - name: vagrant
+    pass: vagrant
+    encrypted: no
+
+postgresql_user_privileges:
+  - name: vagrant
+    db: radio
+    priv: "ALL"
+    role_attr_flags: "CREATEDB"
