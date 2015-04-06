@@ -34,10 +34,19 @@ def pip_upgrade(venv)
   FileUtils.touch venv
 end
 
+# install ansible galaxy roles
+def ansible_galaxy(local)
+  venv  = File.join local, '..', 'venv'
+  roles = File.join local, '..', 'roles'
+  file  = File.join local, '..', 'galaxy-roles.txt'
+  `#{venv}/bin/ansible-galaxy install -r #{file} -p #{roles}`
+end
+
 def install_ansible
-  local = File.dirname(File.expand_path(__FILE__))
-  venv  = File.join(local, '..', 'venv')
-  install_venv(venv)
-  pip_ansible(venv)
-  pip_upgrade(venv)
+  local = File.dirname File.expand_path __FILE__
+  venv  = File.join local, '..', 'venv'
+  install_venv venv
+  pip_ansible venv
+  pip_upgrade venv
+  ansible_galaxy local
 end

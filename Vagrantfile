@@ -24,6 +24,7 @@ Vagrant.configure(2) do |host|
     ansible.playbook = 'playbook.yml'
     ansible.groups = {
       'vagrant' => ['default'],
+      'radio' => ['default'],
     }
   end
 end
