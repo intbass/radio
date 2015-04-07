@@ -2,8 +2,10 @@
   apt: name=icecast2 state=present
 - name: config directory
   file: path=/etc/icecast2 state=directory
-- name: configuration files
+- name: icecast configuration file
   template: src=icecast.xml.j2 dest=/etc/icecast2/icecast.xml
+  notify: restart
+- name: /etc/defaults/icecast2
   template: src=etc_default_icecast2.xml.j2 dest=/etc/default/icecast2
   notify: restart
 - name: check icecast is running

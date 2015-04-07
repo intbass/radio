@@ -1,3 +1,15 @@
 ---
 postgresql_databases:
   - name: radio
+
+icecast:
+  enabled: true
+  config_file: "/etc/icecast2/icecast.xml"
+  user: FARTKNOCKER
+  group: icecast
+  source_password: hackme
+  relay_password: hackme
+  admin_user: admin
+  admin_password: hackme
+  log_level: 3
+  clients: 10

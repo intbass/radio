@@ -1,24 +1,24 @@
 <icecast>
     <limits>
-        <clients>{{ icecast_clients|default(100) }}</clients>
-        <sources>{{ icecast_sources|default(2) }}</sources>
-        <threadpool>{{ icecast_threadpool|default(5) }}</threadpool>
-        <queue-size>{{ icecast_queue_size|default(524288) }}</queue-size>
-        <client-timeout>{{ icecast_client_timeout|default(30) }}</client-timeout>
-        <header-timeout>{{ icecast_header_timeout|default(15) }}</header-timeout>
-        <source-timeout>{{ icecast_source_timeout|default(10) }}</source-timeout>
-        <burst-on-connect>{{ icecast_burst_on_connect|default(1) }}</burst-on-connect>
-        <burst-size>{{ icecast_burst_size|default(65535) }}</burst-size>
+        <clients>{{ icecast.clients|default(100) }}</clients>
+        <sources>{{ icecast.sources|default(2) }}</sources>
+        <threadpool>{{ icecast.threadpool|default(5) }}</threadpool>
+        <queue-size>{{ icecast.queue_size|default(524288) }}</queue-size>
+        <client-timeout>{{ icecast.client_timeout|default(30) }}</client-timeout>
+        <header-timeout>{{ icecast.header_timeout|default(15) }}</header-timeout>
+        <source-timeout>{{ icecast.source_timeout|default(10) }}</source-timeout>
+        <burst-on-connect>{{ icecast.burst_on_connect|default(1) }}</burst-on-connect>
+        <burst-size>{{ icecast.burst_size|default(65535) }}</burst-size>
     </limits>
     <authentication>
-        <source-password>{{ icecast_source_password|default('hackme') }}</source-password>
-        <relay-password>{{ icecast_relay_password|default('hackme') }}</relay-password>
-        <admin-user>{{ icecast_admin_user|default('admin') }}</admin-user>
-        <admin-password>{{ icecast_admin_password|default('hackme') }}</admin-password>
+        <source-password>{{ icecast.source_password|default('hackme') }}</source-password>
+        <relay-password>{{ icecast.relay_password|default('hackme') }}</relay-password>
+        <admin-user>{{ icecast.admin_user|default('admin') }}</admin-user>
+        <admin-password>{{ icecast.admin_password|default('hackme') }}</admin-password>
     </authentication>
-    <hostname>{{ icecast_hostname|default('localhost') }}</hostname>
+    <hostname>{{ icecast.hostname|default('localhost') }}</hostname>
     <listen-socket>
-        <port>{{ icecast_port|default(8000) }}</port>
+        <port>{{ icecast.port|default(8000) }}</port>
     </listen-socket>
     <fileserve>1</fileserve>
     <paths>
@@ -35,6 +35,6 @@
       	<logsize>10000</logsize>
     </logging>
     <security>
-        <chroot>0</chroot>
+        <chroot>{{ icecast.chroot|default(0) }}</chroot>
     </security>
 </icecast>
