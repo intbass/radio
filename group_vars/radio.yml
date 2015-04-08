@@ -5,7 +5,7 @@ postgresql_databases:
 icecast:
   enabled: true
   config_file: "/etc/icecast2/icecast.xml"
-  user: FARTKNOCKER
+  user: icecast
   group: icecast
   source_password: hackme
   relay_password: hackme
