@@ -3,3 +3,4 @@ venv
 group_vars/local.*
 
 roles/ANXS.postgresql
+.idea*
