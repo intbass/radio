@@ -14,6 +14,8 @@ Vagrant.configure(2) do |config|
       vb.name = 'radio-dev'
       vb.gui = false
       vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+      vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+      vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
       vb.memory = 2048
       vb.cpus = 2
     end
