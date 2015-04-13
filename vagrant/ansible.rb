@@ -23,7 +23,7 @@ end
 # Install ansible in the isolated environment
 def pip_ansible(venv)
   ansibin = File.join(venv, 'bin', 'ansible')
-  File.executable?(ansibin) || `#{venv}/bin/pip install ansible docker-py`
+  File.executable?(ansibin) || `#{venv}/bin/pip install ansible markupsafe`
 end
 
 # Upgrade ansible every monthish
