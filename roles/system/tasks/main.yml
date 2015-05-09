@@ -10,5 +10,7 @@
     repo='deb http://security.debian.org/ testing/updates main contrib non-free'
     state=present
 
-#- name: Update apt cache
-#  apt: update_cache=yes
+- name: Create radio role account
+  group:
+    name={{ radio_group }}
+    state=present
