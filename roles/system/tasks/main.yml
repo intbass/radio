@@ -14,3 +14,7 @@
   group:
     name={{ radio_group }}
     state=present
+
+- include: vagrant.yml
+  when:
+    "'vagrant' in group_names"

@@ -1,0 +1,7 @@
+---
+
+- name: Add vagrant user to radio role
+  user:
+    name=vagrant
+    groups={{ radio_group }}
+    append=yes
