@@ -1,3 +1,4 @@
 ---
+
 postgresql_databases:
   - name: radio
