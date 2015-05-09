@@ -1,11 +1,25 @@
+---
+
 - name: Install Icecast2 server
-  apt: name=icecast2 state=present
+  apt:
+    name=icecast2
+    state=present
+
 - name: config directory
-  file: path=/etc/icecast2 state=directory
+  file:
+    path=/etc/icecast2
+    state=directory
+
 - name: configuration files
-  template: src=icecast.xml.j2 dest=/etc/icecast2/icecast.xml
-  template: src=etc_default_icecast2.xml.j2 dest=/etc/default/icecast2
-  notify: restart
+  template:
+    src=icecast.xml.j2
+    dest=/etc/icecast2/icecast.xml
+  template:
+    src=etc_default_icecast2.xml.j2
+    dest=/etc/default/icecast2
+  notify:
+    restart
+
 - name: check icecast is running
   service:
     name=icecast2
