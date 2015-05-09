@@ -1,0 +1,26 @@
+---
+
+- name: Install supybot
+  apt:
+    name={{ item }}
+    state=present
+#    default_release=testing
+  with_items:
+    - supybot
+
+- name: Create bot user
+  user:
+    name="{{ supybot['sys_user'] }}"
+    comment='bot user'
+    shell='/bin/false'
+    state=present
+    groups={{ radio_group }}
+    append=yes
+
+- name: Create configuration file
+  template:
+    src='supybot.conf.j2'
+    dest=/etc/{{ supybot.name }}.conf }}
+    owner={{ supybot.sys_user }}
+    group={{ radio_group }}
+    mode=0644

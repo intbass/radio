@@ -1,4 +1,5 @@
 ---
+
 postgresql_users:
   - name: vagrant
     pass: vagrant
@@ -9,3 +10,9 @@ postgresql_user_privileges:
     db: radio
     priv: "ALL"
     role_attr_flags: "CREATEDB"
+
+supybot:
+   sys_user: botface
+   name: botface
+   ident: devbot
+   user: 'a bot'
