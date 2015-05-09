@@ -18,7 +18,7 @@
     src=etc_default_icecast2.xml.j2
     dest=/etc/default/icecast2
   notify:
-    restart
+    restart icecast
 
 - name: check icecast is running
   service:
