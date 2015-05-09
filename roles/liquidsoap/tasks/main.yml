@@ -28,10 +28,13 @@
     restart liquidsoap
 
 - name: writable recording directory
-  file: path=/music/recs state=directory mode=777
+  file:
+    path=/music/recs
+    state=directory
+    mode=777
 
 - name: check recording directory is writable - if this fails then the host system may need to adjust the permissions on the recs folder
-  shell: ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
+  shell:  ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
   changed_when: 0
 
 - name: check liquidsoap is running
@@ -40,4 +43,4 @@
     state=started
     enabled=yes
     pattern="/usr/bin/liquidsoap -d /etc/liquidsoap/radio.liq"
-  notify: restart
+  notify: restart liquidsoap
