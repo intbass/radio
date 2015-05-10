@@ -4,8 +4,8 @@
   sudo: true
   tags: [ 'radio' ]
   roles:
-    - 'system'
-    - 'ANXS.postgresql'
-    - 'icecast'
-    - 'liquidsoap'
+    #- 'system'
+    #- 'ANXS.postgresql'
+    #- 'icecast'
+    #- 'liquidsoap'
     - 'supybot'
