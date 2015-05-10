@@ -1,0 +1,15 @@
+{% for user in supybot.users %}
+user {{ loop.index }}
+  name {{ user.name }}
+  ignore {{ user.ignored|default("False") }}
+  secure {{ user.secured|default("False") }}
+  hashed True
+  password {{ user.password|default("poo") }}
+{% for c in user['capabilities'] %}
+  capability {{ c }}
+{% endfor %}
+{% for hostmask in user.hostmasks %}
+  hostmask {{ hostmask }}
+{% endfor %}
+
+{% endfor %}

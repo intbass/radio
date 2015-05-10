@@ -10,7 +10,7 @@
 
 - name: Create bot user
   user:
-    name="{{ supybot['sys_user'] }}"
+    name="{{ supybot.sys_user }}"
     comment='bot user'
     shell='/bin/false'
     state=present
@@ -20,7 +20,18 @@
 - name: Create configuration file
   template:
     src='supybot.conf.j2'
-    dest=/etc/{{ supybot.name }}.conf }}
+    dest='/home/{{ supybot.sys_user }}/{{ supybot.name }}.conf'
     owner={{ supybot.sys_user }}
     group={{ radio_group }}
     mode=0644
+
+- name: create users
+  template:
+    src='{{ item }}.conf.j2'
+    dest='/home/{{ supybot.sys_user }}/conf/{{ item }}.conf'
+    owner={{ supybot.sys_user }}
+    group={{ radio_group }}
+    mode=0644
+  with_items:
+    - 'users'
+    - 'channels'
