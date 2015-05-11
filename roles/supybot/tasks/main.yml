@@ -17,6 +17,21 @@
     groups={{ radio_group }}
     append=yes
 
+- name: Create directories
+  file:
+    name='/home/{{ supybot.sys_user}}/{{ item }}'
+    state=directory
+    mode=0750
+    owner='{{ supybot.sys_user }}'
+    group='{{ radio_group }}'
+  with_items:
+    - 'backup'
+    - 'conf'
+    - 'data'
+    - 'data/tmp'
+    - 'logs'
+    - 'plugins'
+
 - name: Create configuration file
   template:
     src='supybot.conf.j2'
