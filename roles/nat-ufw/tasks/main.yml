@@ -1,0 +1,38 @@
+---
+
+- name: Install ufw
+  apt:
+    name=ufw
+    state=present
+
+- name: Enable IP Forwarding
+  sysctl:
+    name='net.ipv4.ip_forward'
+    state=present
+    value=1
+    sysctl_set=yes
+
+- name: ufw permits
+  ufw:
+    rule=allow
+    port='{{ item }}'
+    proto=tcp
+    interface='{{ external_interface }}'
+    direction='in'
+  with_items:
+    - 22
+    - 80
+    - 443
+
+- name: Why must NAT be so complicated in ufw?
+  template:
+    src='before_rules.j2'
+    dest='/etc/ufw/before.rules'
+    owner=root
+    group=root
+    mode=0640
+
+- name: Enable ufw
+  ufw:
+    state=enabled
+    policy=deny
