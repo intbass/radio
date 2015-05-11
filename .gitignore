@@ -3,4 +3,5 @@ venv
 group_vars/local.*
 
 roles/ANXS.*
+roles/jdauphant.*
 .idea*

@@ -11,6 +11,8 @@ postgresql_user_privileges:
     priv: "ALL"
     role_attr_flags: "CREATEDB"
 
+internal_interface: eth2
+
 supybot:
    sys_user: botface
    name: botface

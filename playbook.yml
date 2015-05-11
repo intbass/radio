@@ -1,11 +1,23 @@
 ---
-- name: radio
+
+- name: common system elements
   hosts: all
   sudo: true
-  tags: [ 'radio' ]
   roles:
-    #- 'system'
-    #- 'ANXS.postgresql'
-    #- 'icecast'
-    #- 'liquidsoap'
+    - 'system'
+
+- name: radio
+  hosts: radio
+  sudo: true
+  roles:
+    - 'ANXS.postgresql'
+    - 'icecast'
+    - 'liquidsoap'
     - 'supybot'
+
+- name: web server
+  hosts: nginx
+  sudo: true
+  roles:
+    - 'jdauphant.nginx'
+    - 'nat-ufw'
