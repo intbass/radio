@@ -1,1 +1,28 @@
 ---
+
+nginx_sites:
+  default:
+    - listen 80
+    - server_name _
+    - root "/var/www/default"
+    - index index.html
+  intbass_live:
+     - listen 80 default_server
+     - server_name new.intbass.com
+     - >
+       location /live {
+         # tries to use ipv6 but harbor's not listening there.
+         #proxy_pass http://lqs1.communifi.ca:8888/;
+         proxy_pass http://10.201.0.31:8888/;
+       }
+     - >
+       location /stream {
+         # tries to use ipv6 but icecast's not listening there.
+         #proxy_pass http://lqs1.communifi.ca:8888/;
+         proxy_pass http://10.201.0.31:8000/stream;
+       }
+     - >
+       location / {
+          return 403;
+          break;
+       }
