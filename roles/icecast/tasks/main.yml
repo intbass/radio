@@ -16,17 +16,23 @@
 
 - name: configuration files
   template:
-    src=icecast.xml.j2
-    dest=/etc/icecast2/icecast.xml
-  template:
-    src=etc_default_icecast2.xml.j2
-    dest=/etc/default/icecast2
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   notify:
     restart icecast
+  with_items:
+    - src: 'icecast.xml.j2'
+      dest: '/etc/icecast2/icecast.xml'
+    - src: 'etc_default_icecast2.xml.j2'
+      dest: '/etc/default/icecast2'
+  tags:
+    - 'icecast'
 
 - name: check icecast is running
   service:
     name=icecast2
     state=started
     enabled=yes
-    pattern="/usr/bin/icecast2 -b -c /etc/icecast2/icecast.xml"
+    #pattern="/usr/bin/icecast2 -b -c /etc/icecast2/icecast.xml"
+  tags:
+    - 'icecast'

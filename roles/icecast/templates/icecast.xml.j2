@@ -18,6 +18,7 @@
     </authentication>
     <hostname>{{ icecast_hostname|default('localhost') }}</hostname>
     <listen-socket>
+        <bind-address>::</bind-address>
         <port>{{ icecast_port|default(8000) }}</port>
     </listen-socket>
     <fileserve>1</fileserve>

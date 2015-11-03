@@ -15,6 +15,8 @@ set("server.telnet.port", {{ liquidsoap_telnet_port|default(1337) }})
 
 # harbor
 set("harbor.reverse_dns",false)
+# sucks, no worky
+#set("harbor.bind_addr","::")
 
 # decoder options, this reduces log spam
 set("decoder.file_decoders",["META","MAD","OGG","FLAC","WAV","MIDI","AAC","MP4","CAMLIMAGES","SDL/IMAGE","GSTREAMER"])
@@ -93,7 +95,11 @@ live = input.harbor(
             max=240.0,
             icy = true,
             port = 8888,
-            "live")
+            # no auth script yet
+            #auth = live_auth,
+            user = "intbass",
+            password = "INT_BA55",
+            "/")
 
 # silence detection 
 live = strip_blank(max_blank=20.,live, threshold=-50.)

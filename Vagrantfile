@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VB_GUI="false"
+VB_GUI=false
 
 # To automatically bind the NAT interface to a particular interface on the
 # local machine, set ENV['vagrantnic'] in your ~/.vagrant.d/Vagrantfile
