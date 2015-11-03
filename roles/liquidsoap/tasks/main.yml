@@ -10,15 +10,19 @@
       - liquidsoap-plugin-mad
       - liquidsoap-plugin-lame
       - liquidsoap-plugin-vorbis
-      #- liquidsoap-plugin-flac
+      - liquidsoap-plugin-flac
       - liquidsoap-plugin-icecast
       #- multiarch-support
       - festival
+  tags:
+    - 'liquidsoap'
 
 - name: config directory exists
   file:
     path=/etc/liquidsoap
     state=directory
+  tags:
+    - 'liquidsoap'
 
 - name: copy configuration file
   template:
@@ -26,12 +30,16 @@
     dest=/etc/liquidsoap/radio.liq
   notify:
     restart liquidsoap
+  tags:
+    - 'liquidsoap'
 
 - name: writable recording directory
   file:
     path=/music/recs
     state=directory
     mode=777
+  tags:
+    - 'liquidsoap'
 
 - name: check recording directory is writable - if this fails then the host system may need to adjust the permissions on the recs folder
   shell:  ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
@@ -47,3 +55,6 @@
     enabled=yes
     pattern="/usr/bin/liquidsoap -d /etc/liquidsoap/radio.liq"
   notify: restart liquidsoap
+  tags:
+    - 'liquidsoap'
+

@@ -4,11 +4,15 @@
   apt:
     name=icecast2
     state=present
+  tags:
+    - 'icecast'
 
 - name: config directory
   file:
     path=/etc/icecast2
     state=directory
+  tags:
+    - 'icecast'
 
 - name: configuration files
   template:
