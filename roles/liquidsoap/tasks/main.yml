@@ -36,6 +36,9 @@
 - name: check recording directory is writable - if this fails then the host system may need to adjust the permissions on the recs folder
   shell:  ls -dl /music/recs/ | grep -qe '^drwxrwxrwx'
   changed_when: 0
+  when: '"vagrant" in groups'
+  tags:
+    - 'liquidsoap'
 
 - name: check liquidsoap is running
   service:
