@@ -6,18 +6,18 @@
   roles:
     - 'system'
 
-- name: radio
-  hosts: radio
+- name: liquidsoap
+  hosts: liquidsoap
   sudo: true
   roles:
     - 'ANXS.postgresql'
     - 'icecast'
     - 'liquidsoap'
-    - 'supybot'
+#    - 'supybot'
 
 - name: web server
   hosts: nginx
   sudo: true
   roles:
     - 'jdauphant.nginx'
-    - 'nat-ufw'
+    #- 'nat-ufw'
