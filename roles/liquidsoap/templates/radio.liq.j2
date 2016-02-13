@@ -122,10 +122,10 @@ radiostream = on_metadata( call_notify, radiostream )
 #
 
 # save live streams to file
-output.file({{ liquidsoap_recording_format|default('%flac(samplerate=44100)') }},
+output.file({{ liquidsoap_recording_format|default('%mp3(samplerate=44100)') }},
         fallible=true, perm=0o644,
         reopen_on_metadata=true,
-        "{{ liquidsoap_recording_path|default('/music/recs') }}/{{ liquidsoap_recording_pattern|default('%Y%m%d-%H%M-$(artist)-$(title).flac') }}", live)
+        "{{ liquidsoap_recording_path|default('/music/recs') }}/{{ liquidsoap_recording_pattern|default('%Y%m%d-%H%M-$(artist)-$(title).mp3') }}", live)
 
 {% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%mp3', 'mount': 'stream', 'host': '127.0.0.1', 'port': 8000, 'password': 'hackme' }]) %}
 output.icecast({{ mount.format }},mount="/{{ mount.mount }}",
