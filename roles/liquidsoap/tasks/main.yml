@@ -37,7 +37,7 @@
   file:
     path=/music/recs
     state=directory
-    mode=777
+    mode=0777
   tags:
     - 'liquidsoap'
 
