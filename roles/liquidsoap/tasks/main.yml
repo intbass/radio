@@ -55,6 +55,7 @@
     enabled=yes
     pattern="/usr/bin/liquidsoap -d /etc/liquidsoap/radio.liq"
   notify: restart liquidsoap
+  when: '"vagrant" not in groups'
   tags:
     - 'liquidsoap'
 
