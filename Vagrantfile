@@ -34,7 +34,7 @@ Vagrant.configure(2) do |config|
       ansible.playbook = 'playbook.yml'
       ansible.groups = {
         'vagrant' => ['radio-dev'],
-        'liquidsoap' => ['radio-dev' ]
+        'radio' => ['radio-dev' ]
       }
     end
 end
