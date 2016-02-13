@@ -5,19 +5,9 @@
   sudo: true
   roles:
     - 'system'
-
-- name: liquidsoap
-  hosts: liquidsoap
-  sudo: true
-  roles:
-    - 'ANXS.postgresql'
-    - 'icecast'
-    - 'liquidsoap'
-#    - 'supybot'
-
-- name: web server
-  hosts: nginx
-  sudo: true
-  roles:
+#    - 'ANXS.postgresql'
     - 'jdauphant.nginx'
+    - 'liquidsoap'
+    - 'icecast'
     #- 'nat-ufw'
+#    - 'supybot'
