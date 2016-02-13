@@ -12,7 +12,7 @@ install_ansible
 Vagrant.configure(2) do |config|
     # radio
     config.vm.define "radio-dev" do |host|
-      host.vm.box = "mokote/debian-7"
+      host.vm.box = "mokote/debian-8"
       host.vm.hostname = "radio-dev"
       if ENV['vagrantnic']
         host.vm.network :public_network, type: :dhcp, bridge: ENV['vagrantnic']
