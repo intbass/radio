@@ -1,0 +1,20 @@
+[Unit]
+Description=uWSGI API 
+After=syslog.target
+
+[Service]
+ExecStart=/opt/intbass/api/venv/bin/uwsgi -s /var/run/api/uwsgi.sock --chmod-socket --die-on-term --logger syslog:uwsgi-api -w app:app
+Restart=always
+KillSignal=SIGTERM
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=intbass-api
+User=api
+Group=api
+Environment=ENV=woo
+WorkingDirectory=/opt/intbass/api/
+Type=notify
+NotifyAccess=all
+ 
+[Install]
+WantedBy=multi-user.target

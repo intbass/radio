@@ -6,8 +6,24 @@
   roles:
     - 'system'
     - 'ANXS.postgresql'
-    - 'jdauphant.nginx'
+    - role: 'jdauphant.nginx'
+      nginx_sites:
+        default:
+        - listen 80
+        - server_name _
+        - root "/opt/intbass/website"
+        - location / { try_files $uri $uri/ /index.html; }
+        - location = /api { rewrite ^ /api/; }
+        - location /api { try_files $uri @api; }
+        - location @api {
+             include uwsgi_params;
+             uwsgi_param SCRIPT_NAME /api;
+             uwsgi_modifier1 30;
+             uwsgi_pass unix:/var/run/api/uwsgi.sock;
+         }
     - 'liquidsoap'
     - 'icecast'
+    - 'geerlingguy.git'
+    - 'intbass-api'
     #- 'nat-ufw'
 #    - 'supybot'

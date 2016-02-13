@@ -1,0 +1,75 @@
+---
+- name: 'create group'
+  become: true
+  group:
+    name: 'api'
+
+- name: 'api user'
+  become: true
+  user:
+    name: 'api'
+    group: 'api'
+
+- name: 'acquire source'
+  git: repo=https://github.com/intbass/intbass
+       dest=/opt/intbass/api/
+       version=master
+  tags:
+    - 'api'
+
+- name: install python packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python
+    - python-mysqldb
+    - python-pip
+    - python-virtualenv
+    - python-dev
+    - libffi-dev
+  tags:
+    - 'api'
+
+- name: 'install server'
+  pip:
+    name: uwsgi
+    virtualenv: /opt/intbass/api/venv
+  tags:
+    - 'api'
+
+- name: 'install dependencies'
+  pip:
+    requirements: /opt/intbass/api/requirements.txt
+    virtualenv: /opt/intbass/api/venv
+  tags:
+    - 'api'
+
+- name: socket directory
+  become: true
+  file:
+    path: /var/run/api
+    owner: api
+    group: api
+    state: directory
+    mode: 0755
+
+- name: copy systemd service file
+  become: true
+  template:
+    src: service.j2
+    dest: /lib/systemd/system/api.service
+    owner: root
+    mode: 644
+  notify:
+    - reload systemd
+    - restart api
+  tags:
+    - 'api'
+
+- name: check api is running
+  service:
+    name=api
+    state=started
+    enabled=yes
+  notify: restart api
+  tags:
+    - 'api'

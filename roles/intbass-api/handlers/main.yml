@@ -1,0 +1,9 @@
+---
+
+- name: reload systemd
+  become: true 
+  command: systemctl daemon-reload
+
+- name: restart api 
+  become: true 
+  command: systemctl restart api 
