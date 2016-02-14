@@ -1,4 +1,7 @@
 ---
+icecast_source_password: hackme
+intbass_db_uri: localhost
+flask_secret_key: hackme
 
 postgresql_users:
   - name: vagrant

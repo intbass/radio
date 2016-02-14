@@ -29,6 +29,30 @@
   tags:
     - 'api'
 
+- name: 'config directory'
+  become: true
+  file:
+    path: /etc/api
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: 'config files'
+  template:
+    src: '{{ item }}'
+    dest: '/etc/api/{{ item }}'
+    owner: root
+    mode: 644
+  with_items:
+  - flask.cfg
+  - uwsgi.ini
+  notify:
+    - restart api
+  tags:
+    - 'api'
+
+
 - name: 'install server'
   pip:
     name: uwsgi
