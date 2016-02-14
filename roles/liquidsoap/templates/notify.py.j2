@@ -1,0 +1,113 @@
+#!/usr/bin/env python2
+
+import os
+import sys
+dir = '%s/../api/' % os.path.dirname(os.path.abspath(__file__))
+activate_this = '%s/bin/activate_this.py' % dir
+execfile(activate_this, dict(__file__=activate_this))
+sys.path.insert(0, dir)
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from icealchemy import Base, Station
+import MySQLdb
+import argparse
+import socket
+import logging
+
+
+logging.basicConfig()
+log = logging.getLogger("liquidsoap-notify")
+log.info("Starting Liquid Soap Notification Script")
+
+engine = create_engine('{{ intbass_db_uri }}',
+                       convert_unicode=True)
+session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+def updatedb(args,session):
+    db = session()
+    station = db.query(Station).filter(Station.tag==args.channel).first()
+    if station is None:
+        log.error('No station found for %s' % args.channel)
+        return False
+    if args.title is not None:
+        station.playing = args.title
+    if args.artist is not None:
+        station.artist = args.artist
+    if args.live is not None:
+        station.live = args.live
+    db.commit()
+
+
+def updatebot(args):
+    if args.channel != 'intbass' :
+        return
+    if args.title is None or args.artist is None:
+        return
+    if args.live:
+        message = '<b>LIVE NOW</b>'
+    else:
+        message = 'playing from the archive'
+    message = "%s %s by %s\n" % (message, args.title, args.artist)
+    log.error('message %s' % message)
+    port = int(args.port)
+    if port is not None:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(('localhost', port))
+            log.error('Connected')
+            s.sendall(message.encode('ascii', 'ignore'))
+        except socket.error as msg:
+            log.error("Socket error: %s" % msg)
+        finally:
+            s.close()
+
+if __name__ == '__main__':
+    # Understand the command
+    parser = argparse.ArgumentParser(description='Liquid Soap Notification Script')
+    parser.add_argument('--live', action='store_const', help='The Live show starting flag', const=True)
+    parser.add_argument('--dead', action='store_false', help='The Live show ending flag', dest='live')
+    parser.add_argument('--no-mysql', action='store_false', help='skip updating mysql', dest='mysql')
+    parser.add_argument('--no-alchemy', action='store_false', help='skip updating pgsql', dest='pgsql')
+    parser.add_argument('--artist', action='store', help='The name of the artist')
+    parser.add_argument('--title', action='store', help='The title of the work')
+    parser.add_argument('--album', action='store', help='The title of the work')
+    parser.add_argument('--port', action='store', help='The TCP to send a notification to')
+    parser.add_argument('--channel', action='store', help='The channel the update belongs to', required=True)
+
+    args = parser.parse_args()
+
+    if args.port is None:
+        args.port = 12001
+
+    log.setLevel(logging.DEBUG)
+
+    for arg, value in sorted(vars(args).items()):
+        log.debug("Argument %s: %r", arg, value)
+
+    if args.live is None:
+        log.warn('No live parameter checking db')
+        db = session()
+        station = db.query(Station).filter(Station.tag==args.channel).first()
+        if station is None:
+            log.error('No station found for %s' % args.channel)
+        else:
+            args.live = station.live
+
+    if args.live:
+        log.warn('Think we are live so checking liquidsoap')
+        from Liquidsoap import Instance, cmd, getID
+        ls = Instance('notneeded', 'localhost', 1337, 3)
+        id = getID(ls, 'strip_blank')
+        strip = cmd(ls, 'strip_blank_%s.is_stripping' % id)
+        if strip[0] != 'false':
+            log.warn('liquidsoap thinks it is stripping')
+            args.live = 0
+
+    if args.mysql:
+        updatemysql(args)
+    if args.pgsql:
+        updatedb(args, session)
+    if args.port:
+        updatebot(args)
+    #updatefb(args, session)

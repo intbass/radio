@@ -48,6 +48,33 @@
   tags:
     - 'liquidsoap'
 
+- name: check radio bin directory
+  file:
+    path: '/opt/radio/bin'
+    state: 'directory'
+    mode: 0755
+    owner: 'intbass'
+    group: 'intbass'
+
+- name: copy radio scripts
+  copy:
+    src: '{{ item }}'
+    dest: '/opt/radio/bin/{{ item }}'
+    owner: 'intbass'
+    group: 'intbass'
+    mode: 0755
+  with_items:
+    - 'live_auth.py'
+
+# contains passwords stored in ansible vault
+- name: write notify.py from template
+  template:
+    src: 'notify.py.j2'
+    dest: '/opt/radio/bin/notify.py'
+    owner: 'intbass'
+    group: 'intbass'
+    mode: 0750
+
 - name: check liquidsoap is running
   service:
     name=liquidsoap
