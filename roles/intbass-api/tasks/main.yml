@@ -89,6 +89,8 @@
   tags:
     - 'api'
 
+- meta: flush_handlers
+
 - name: check api is running
   service:
     name=api
