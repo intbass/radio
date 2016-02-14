@@ -3,7 +3,7 @@ Description=uWSGI API
 After=syslog.target
 
 [Service]
-ExecStart=/opt/intbass/api/venv/bin/uwsgi --ini /etc/intbass/uwsgi.ini
+ExecStart=/opt/intbass/api/venv/bin/uwsgi --ini /etc/api/uwsgi.ini
 Restart=always
 KillSignal=SIGTERM
 StandardOutput=syslog
@@ -11,7 +11,7 @@ StandardError=syslog
 SyslogIdentifier=intbass-api
 User=api
 Group=api
-Environment=INTBASS_SETTINGS=/etc/intbass/flask.cfg
+Environment=INTBASS_SETTINGS=/etc/api/flask.cfg
 WorkingDirectory=/opt/intbass/api/
 Type=notify
 NotifyAccess=all
