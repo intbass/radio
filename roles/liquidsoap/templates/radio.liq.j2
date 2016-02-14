@@ -137,9 +137,12 @@ output.file({{ liquidsoap_recording_format|default('%mp3(samplerate=44100)') }},
         reopen_on_metadata=true,
         "{{ liquidsoap_recording_path|default('/music/recs') }}/{{ liquidsoap_recording_pattern|default('%Y%m%d-%H%M-$(artist)-$(title).mp3') }}", live)
 
-{% for mount in liquidsoap_icecast_mounts|default([{ 'format': '%mp3', 'mount': 'stream', 'host': '127.0.0.1', 'port': 8000, 'password': 'hackme' }]) %}
-output.icecast({{ mount.format }},mount="/{{ mount.mount }}",
-    host="{{ mount.host }}", port = {{ mount.port }},
-	password = "{{ icecast_source_password }}",
-	url = "{{ liquidsoap_station_url|default('http://radio.dev/streams') }}", description = "{{ liquidsoap_station_description|default('development radio') }}", radiostream )
+## icecast mounts
+{% for mount in liquidsoap_icecast_mounts %}
+output.icecast(%{{ mount.format }}, mount="{{ mount.name }}",
+    host="{{ mount.host }}", password="{{ mount.password }}", port={{ mount.port|default("8000") }},
+    url="{{ intbass_url }}", description="{{ intbass_description }}",
+    {{ mount.source }} )
+
 {% endfor %}
+
