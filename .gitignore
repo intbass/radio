@@ -1,4 +1,5 @@
 .vagrant*
+vault
 venv
 group_vars/local.*
 
