@@ -31,6 +31,9 @@ Vagrant.configure(2) do |config|
       end
     end
     config.vm.provision 'ansible' do |ansible|
+      if ENV.key?('TAGS') then
+        ansible.tags = ENV['TAGS']
+      end
       ansible.playbook = 'playbook.yml'
       ansible.groups = {
         'vagrant' => ['radio-dev'],
