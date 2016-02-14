@@ -2,3 +2,5 @@
 
 postgresql_databases:
   - name: radio
+
+liquidsoap_station_url: 'intbass.com'
