@@ -26,6 +26,8 @@
     - python-virtualenv
     - python-dev
     - libffi-dev
+    - libgeoip-dev
+    - postgresql-server-dev-9.5
   tags:
     - 'api'
 
