@@ -1,5 +1,6 @@
-[nginx]
-wpx1.tor.communifi.ca
+[intbass:children]
+radio
 
-[liquidsoap]
-lqs1.communifi.ca
+[radio]
+angel.intbass.com
+
