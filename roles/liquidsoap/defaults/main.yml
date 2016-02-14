@@ -1,0 +1,19 @@
+---
+
+intbass_description: "International Bass Station"
+intbass_url: 'http://intbass.com'
+
+liquidsoap_icecast_mounts:
+  - name: 'local_mp3_hi'
+    format: 'mp3(bitrate=192)'
+    host: 'localhost'
+    port: '8000'
+    password: 'hackme'
+    source: 'radiostream'
+  - name: 'local_ogg_hi'
+    format: 'vorbis(quality=0.4)'
+    host: 'localhost'
+    port: '8000'
+    password: 'hackme'
+    source: 'radiostream'
+
