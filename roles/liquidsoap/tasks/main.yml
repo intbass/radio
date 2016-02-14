@@ -1,5 +1,10 @@
 ---
 
+- name: intbass user
+  user:
+    name: intbass
+    state: present
+
 - name: install liquidsoap
   apt:
     name={{ item }}
